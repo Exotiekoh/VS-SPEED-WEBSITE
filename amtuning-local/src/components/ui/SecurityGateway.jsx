@@ -1,50 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, ScanLine, Lock, CheckCircle, Smartphone } from 'lucide-react';
 
 const SecurityGateway = ({ children }) => {
-    const [scanStatus, setScanStatus] = useState('checking'); // checking, verified, failed
-    const [progress, setProgress] = useState(0);
+    const [scanStatus, setScanStatus] = useState(() => {
+        return sessionStorage.getItem('vsspeed_verified') === 'true' ? 'verified' : 'checking';
+    });
+    const [progress, setProgress] = useState(sessionStorage.getItem('vsspeed_verified') === 'true' ? 100 : 0);
     const [logs, setLogs] = useState([]);
+    
+    // Generate fake IP once for display
+    const [fakeIP] = useState(() => 
+        `${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`
+    );
 
     useEffect(() => {
         const addLog = (msg) => setLogs(prev => [...prev, msg]);
 
         // Simulated Security Checks
         const runDiagnostics = async () => {
+            if (scanStatus === 'verified') return;
+
             addLog('Initializing VSSPEED Protocol v9.2...');
-            await new Promise(r => setTimeout(r, 600));
+            await new Promise(r => setTimeout(r, 400));
             setProgress(20);
 
             addLog('Analyzing Client User Agent...');
-            // Simple check for automation flags (Navigator.webdriver)
-            const isAutomation = navigator.webdriver;
-            await new Promise(r => setTimeout(r, 800));
+            await new Promise(r => setTimeout(r, 500));
             setProgress(50);
 
-            if (isAutomation) {
-                addLog('WARNING: Automation Flag Detected');
-                // You might deny access here in a real strict app, 
-                // but for this demo, we'll flag it but maybe allow or fail.
-                // Let's mimic a strict fail for "bot" browser properties.
-                // UNCOMMENT TO STRICTLY BLOCK BOTS:
-                // setScanStatus('failed');
-                // return;
-            }
-
             addLog('Verifying Encryption Keys...');
-            await new Promise(r => setTimeout(r, 700));
+            await new Promise(r => setTimeout(r, 400));
             setProgress(80);
 
             addLog('Establishing Secure Handshake...');
-            await new Promise(r => setTimeout(r, 500));
+            await new Promise(r => setTimeout(r, 300));
             setProgress(100);
 
             addLog('Access Granted.');
+            sessionStorage.setItem('vsspeed_verified', 'true');
             setScanStatus('verified');
         };
 
         runDiagnostics();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (scanStatus === 'verified') {
@@ -53,21 +52,11 @@ const SecurityGateway = ({ children }) => {
 
     if (scanStatus === 'failed') {
         return (
-            <div style={{ 
-                height: '100vh', 
-                width: '100vw', 
-                background: 'black', 
-                color: 'red', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                fontFamily: 'monospace' 
-            }}>
+            <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-red-500 font-mono">
                 <ShieldAlert size={64} className="mb-4" />
                 <h1 className="text-4xl font-bold mb-2">ACCESS DENIED</h1>
                 <p>AUTOMATION / BOT TRAFFIC DETECTED</p>
-                <p className="text-xs mt-4 text-gray-500">IP LOGGED: {Math.floor(Math.random()*255)}.{Math.floor(Math.random()*255)}.{Math.floor(Math.random()*255)}.{Math.floor(Math.random()*255)}</p>
+                <p className="text-xs mt-4 text-gray-500">IP LOGGED: {fakeIP}</p>
             </div>
         );
     }

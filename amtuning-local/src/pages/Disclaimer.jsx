@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const Disclaimer = () => {
     return (
-        <div style={{ background: 'var(--color-bg-deep)', minHeight: '100vh', color: 'white', padding: '120px 0' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh', color: 'white', padding: '120px 0' }}>
             <div className="container" style={{ maxWidth: '800px' }}>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

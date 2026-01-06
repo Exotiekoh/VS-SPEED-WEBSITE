@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Car, ChevronDown, X } from 'lucide-react';
 import { useVehicle } from '../../contexts/VehicleContext';
@@ -31,11 +31,11 @@ const VehicleSelectorBar = () => {
                         position: 'sticky',
                         top: 0,
                         zIndex: 999,
-                        background: 'linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(26,26,26,0.95) 100%)',
-                        backdropFilter: 'blur(20px)',
-                        borderBottom: '2px solid var(--color-primary-red)',
-                        boxShadow: '0 4px 30px rgba(255,60,60,0.3)',
-                        padding: '12px 0'
+                        background: 'rgba(0,0,0,0.92)',
+                        backdropFilter: 'blur(30px)',
+                        borderBottom: '1px solid rgba(255, 60, 60, 0.3)',
+                        boxShadow: '0 10px 40px rgba(0,0,0,0.8)',
+                        padding: '15px 0'
                     }}
                 >
                     <div className="container flex items-center justify-between">
@@ -226,6 +226,7 @@ const VehicleSelectorBar = () => {
                                                     outline: 'none',
                                                     opacity: vehicle.make ? 1 : 0.5
                                                 }}
+                                                maxLength={25}
                                             />
                                         </div>
 

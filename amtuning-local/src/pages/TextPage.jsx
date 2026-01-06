@@ -3,18 +3,15 @@ import { motion } from 'framer-motion';
 
 const TextPage = ({ title, content }) => {
     return (
-        <div style={{ background: 'var(--color-bg-deep)', minHeight: '100vh', color: 'white' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh', color: 'white' }}>
             <div className="container" style={{ padding: '80px 1.5rem', maxWidth: '1000px' }}>
                 <motion.div 
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="glass" 
+                    className="glass-card" 
                     style={{ 
-                        padding: '60px', 
-                        borderRadius: '32px', 
-                        background: 'rgba(255,255,255,0.01)',
-                        border: '1px solid rgba(255,255,255,0.05)'
+                        padding: '60px'
                     }}
                 >
                     <div style={{ marginBottom: '40px' }}>

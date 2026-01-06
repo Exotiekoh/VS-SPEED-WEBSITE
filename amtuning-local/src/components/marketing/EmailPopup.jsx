@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Zap, Sparkles } from 'lucide-react';
+import popupYellowGolf from '../../assets/popup_yellow_golf.jpg';
 
 const EmailPopup = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -107,23 +108,32 @@ const EmailPopup = () => {
                                 overflowY: 'auto'
                             }}
                         >
-                            {/* Animated Background */}
-                            <motion.div
-                                animate={{
-                                    background: [
-                                        'radial-gradient(circle at 20% 50%, rgba(255, 60, 60, 0.12) 0%, transparent 50%)',
-                                        'radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.12) 0%, transparent 50%)',
-                                        'radial-gradient(circle at 20% 50%, rgba(255, 60, 60, 0.12) 0%, transparent 50%)'
-                                    ]
-                                }}
-                                transition={{ duration: 4, repeat: Infinity }}
+                            {/* Background Image */}
+                            <div
                                 style={{
                                     position: 'absolute',
                                     inset: 0,
                                     zIndex: 0,
-                                    pointerEvents: 'none'
+                                    pointerEvents: 'none',
+                                    overflow: 'hidden'
                                 }}
-                            />
+                            >
+                                <img 
+                                    src={popupYellowGolf} 
+                                    alt="VS SPEED Performance"
+                                    style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        objectFit: 'cover',
+                                        opacity: 0.4
+                                    }}
+                                />
+                                <div style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    background: 'linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.75) 50%, rgba(212,175,55,0.2) 100%)'
+                                }} />
+                            </div>
 
                             {/* Close Button */}
                             <button

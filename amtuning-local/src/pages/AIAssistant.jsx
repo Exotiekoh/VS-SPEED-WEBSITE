@@ -1,12 +1,34 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ChevronRight, Send, Bot, User, Sparkles, Car, Wrench, DollarSign, HelpCircle, ShieldCheck, Zap, Radio, Target, Info } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ChevronRight, Send, Bot, User, AlertTriangle, Car, Wrench, Zap, Radio, Target, Info, ShieldCheck } from 'lucide-react';
 import { useVehicle } from '../contexts/VehicleContext';
-import { motion, AnimatePresence } from 'framer-motion';
+// eslint-disable-next-line no-unused-vars
+import { AnimatePresence, motion } from 'framer-motion';
+import AIDisclaimerModal from '../components/AIDisclaimerModal';
+import RotatingList from '../components/ui/RotatingList';
 
 const AIAssistant = () => {
-    const { vehicle } = useVehicle();
+    const { vehicle, installedParts } = useVehicle();
+    const navigate = useNavigate();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [showDisclaimer, setShowDisclaimer] = useState(false);
+    const [disclaimerAccepted, setDisclaimerAccepted] = useState(() => {
+        return localStorage.getItem('ai_disclaimer_accepted') === 'true';
+    });
+    
+    // Check garage prerequisite on mount
+    useEffect(() => {
+        if (!vehicle.make) {
+            // No garage configured, redirect
+            navigate('/garage');
+            return;
+        }
+        
+        // Check if disclaimer needs to be shown
+        if (!disclaimerAccepted) {
+            setShowDisclaimer(true);
+        }
+    }, [vehicle.make, disclaimerAccepted, navigate]);
     
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -48,110 +70,17 @@ How shall we proceed with your ${vehicle.make || 'project'}?`
         { icon: <Target size={16} />, text: 'Track active shipment' }
     ];
 
-    const getAIResponse = (userMessage) => {
-        const lowerMsg = userMessage.toLowerCase();
-        const vMake = (vehicle.make || '').toLowerCase();
-        const vModel = (vehicle.model || '').toLowerCase();
-
-        // 1. Optimization / Mods logic based on Vehicle
-        if (lowerMsg.includes('optimize') || lowerMsg.includes('mod') || lowerMsg.includes('upgrade') || lowerMsg.includes('stage')) {
-            if (vMake === 'audi' || vMake === 'volkswagen') {
-                return `ANALYZING MQB PLATFORM DEPLOYMENT...
-                
-For your ${vehicle.make} ${vehicle.model}, I recommend the Phase 1 "Urban Predator" configuration:
-
-**1. Primary Intake:** VSS High-Flow Cold Air System (+12HP)
-**2. Management:** Stage 1 ECU Refinement (VSS-Spec)
-**3. Power Retention:** Dogbone Mount Upgrade (Eliminates wheel hop)
-
-**Total Estimated HP Gain:** +45-65 WHP
-**Operational Cost:** ~$1,250.00 CAD
-
-Should I add these components to your procurement list?`;
-            } else if (vMake === 'bmw') {
-                return `ANALYZING BAVARIAN POWER DEPLOYMENT...
-                
-For your ${vehicle.make} ${vehicle.model}, we recommend the "B-Series Dominator" path:
-
-**1. Airflow:** Charge Pipe Upgrade (Mandatory for reliability)
-**2. Thermal Management:** VSS Performance Intercooler
-**3. Calibration:** Stage 2 Bootmod3 / MHD Transmission
-
-**Telemetry Projection:** +80-100 WHP over stock.
-**Strategic Note:** Recommending Index 12 injectors if tracking N54 platform.
-
-Initiate catalog search for these identifiers?`;
-            } else if (vMake === 'ferrari') {
-                return `ANALYZING EXOTIC TELEMETRY... 🏎️
-                
-For your Ferrari ${vehicle.model}, we focus on aerodynamic efficiency and acoustic range:
-
-**1. Aero:** VSS Dry Carbon Diffuser & Front Lip (+15% Downforce)
-**2. Exhaust:** Valvetronic X-Pipe Deployment
-**3. Software:** ECU Mapping for decat-response
-
-**Strategic Disclaimer:** Exotic series procurement requires specialist installation.
-
-Generate a custom body-kit visualization for your chassis?`;
-            } else {
-                return `ANALYZING GENERIC PERFORMANCE DATA...
-                
-As your vehicle telemetry is limited, I recommend starting with the "VSS Core Three":
-1. High-Flow Air Filtration
-2. Stage 1 ECU Software Mapping
-3. Performance Brake Fluid/Pads (Safety First)
-
-Connect your vehicle in the Garage for chassis-specific Stage 2/3 benchmarks.`;
-            }
-        }
-
-        // 2. Installation Logic
-        if (lowerMsg.includes('intake') || lowerMsg.includes('install') || lowerMsg.includes('how to')) {
-            return `PROTOCOL: COMPONENT IMPLEMENTATION (AIR INTAKE)
-
-**Required Toolset:**
-• 10mm Drive Socket
-• Precision Flathead Driver
-• T25 Torx Driver (Standard for ${vMake === 'bmw' || vMake === 'audi' ? 'German' : 'Global'} exports)
-
-**Operational Sequence:**
-1. Secure negative battery terminal
-2. Decouple OEM airbox assembly
-3. Transfer MAF sensor to VSS high-flow housing
-4. Secure VSS assembly to chassis mounts
-5. Finalize signal connections
-
-💡 **INTEL:** Synchronize ECU by allowing 300 seconds of idle time post-install.
-
-Do you require the specific torque settings for these mounting points?`;
-        }
-
-        // 3. Shipping / Tracking
-        if (lowerMsg.includes('order') || lowerMsg.includes('track') || lowerMsg.includes('shipment')) {
-            return `COORDINATING LOGISTICS TELEMETRY... 📦
-
-To retrieve real-time status, transmit your Order ID (Format: VSS-XXXXX).
-
-**CURRENT TRANSIT WINDOWS:**
-• Domestic (Canada): 2-5 Business Days
-• Continental (US): 5-10 Business Days
-• Global: 7-21 Business Days
-
-**Note:** Exotic body kits (Ferrari/Porsche) ship via dedicated freight for maximum security.`;
-        }
-
-        return `INPUT RECEIVED. ${vehicle.make ? `Processing data for ${vehicle.make} sector...` : "Scanning general databases..."}
-
-I am standing by to assist with:
-• Technical schematics and part selection
-• Installation troubleshooting
-• Performance scaling intelligence
-• Order stream status
-
-Transmit your query for analysis.`;
+    const handleDisclaimerAccept = () => {
+        localStorage.setItem('ai_disclaimer_accepted', 'true');
+        setDisclaimerAccepted(true);
+        setShowDisclaimer(false);
     };
 
-    const handleSend = () => {
+    const handleDisclaimerDecline = () => {
+        navigate('/');
+    };
+
+    const handleSend = async () => {
         if (!inputValue.trim()) return;
 
         const userMessage = inputValue.trim();
@@ -159,11 +88,67 @@ Transmit your query for analysis.`;
         setInputValue('');
         setIsTyping(true);
 
-        setTimeout(() => {
-            const response = getAIResponse(userMessage);
+        try {
+            // Import Gemini AI service
+            const { callGeminiAI, AI_CONSULTANT_SYSTEM_PROMPT } = await import('../services/geminiAI.js');
+            
+            // Build consultant-specific system prompt
+            let contextPrompt = AI_CONSULTANT_SYSTEM_PROMPT;
+            
+            // Add vehicle context
+            if (vehicle.make) {
+                contextPrompt += `\n\n**CURRENT VEHICLE CONTEXT:**\n`;
+                contextPrompt += `- Vehicle: ${vehicle.make}${vehicle.model ? ` ${vehicle.model}` : ''}${vehicle.year ? ` (${vehicle.year})` : ''}\n`;
+                
+                if (installedParts && installedParts.length > 0) {
+                    contextPrompt += `- Modified Parts:\n`;
+                    installedParts.forEach(part => {
+                        contextPrompt += `  • ${part.name}${part.brand ? ` (${part.brand})` : ''}\n`;
+                    });
+                }
+
+                contextPrompt += `\nTailor recommendations specifically for this vehicle platform.`;
+            }
+
+            // Prepare messages for AI
+            const aiMessages = messages.map(msg => ({
+                role: msg.role,
+                content: msg.content
+            }));
+            aiMessages.push({ role: 'user', content: userMessage });
+
+            // Call Gemini AI
+            const response = await callGeminiAI(aiMessages, contextPrompt);
+            
             setMessages(prev => [...prev, { role: 'assistant', id: Date.now() + 1, content: response }]);
             setIsTyping(false);
-        }, 1200);
+            
+        } catch (error) {
+            console.error('AI Error:', error);
+            
+            // Fallback to basic response on error
+            const fallbackResponse = getBasicFallbackResponse(userMessage);
+            setMessages(prev => [...prev, { role: 'assistant', id: Date.now() + 1, content: fallbackResponse }]);
+            setIsTyping(false);
+        }
+    };
+
+    const getBasicFallbackResponse = (userMessage) => {
+        const lowerMsg = userMessage.toLowerCase();
+        
+        if (lowerMsg.includes('optimize') || lowerMsg.includes('upgrade') || lowerMsg.includes('stage')) {
+            return `⚡ **PERFORMANCE OPTIMIZATION**\n\nI can help you build the perfect upgrade path! ${vehicle.make ? `For your ${vehicle.make}` : 'Please'} let me know your goals:\n- Target horsepower\n- Budget range\n- Intended use (daily/track/both)`;
+        }
+        
+        if (lowerMsg.includes('install') || lowerMsg.includes('how to')) {
+            return `🔧 **INSTALLATION GUIDANCE**\n\nI can provide step-by-step installation protocols! Which component are you installing?`;
+        }
+        
+        if (lowerMsg.includes('order') || lowerMsg.includes('track') || lowerMsg.includes('ship')) {
+            return `📦 **LOGISTICS TRACKING**\n\nShare your order ID (Format: VSS-XXXXX) and I'll retrieve your shipment status.\n\n**Standard Transit:**\n• Canada: 2-5 days\n• USA: 5-10 days\n• International: 7-21 days`;
+        }
+        
+        return `🤖 AI connection issue. I can still assist with:\n• Performance parts selection\n• Installation procedures\n• Order tracking\n• Technical consultation\n\nWhat can I help you with?`;
     };
 
     const handleQuickQuestion = (question) => {
@@ -173,7 +158,7 @@ Transmit your query for analysis.`;
     const isMobile = windowWidth <= 1024;
 
     return (
-        <div style={{ background: 'var(--color-bg-deep)', color: 'white', minHeight: '100vh' }}>
+        <div style={{ background: 'transparent', color: 'white', minHeight: '100vh' }}>
             <div className="container" style={{ padding: '40px 1.5rem 100px' }}>
                 {/* Breadcrumb */}
                 <div className="flex gap-2 items-center" style={{ fontSize: '13px', color: '#666', marginBottom: '30px' }}>
@@ -184,46 +169,46 @@ Transmit your query for analysis.`;
 
                 <div style={{ 
                     display: 'grid', 
-                    gridTemplateColumns: isMobile ? '1fr' : '1fr 380px', 
-                    gap: isMobile ? '30px' : '60px', 
-                    maxWidth: '1400px', 
+                    gridTemplateColumns: isMobile ? '1fr' : '300px 1fr 300px', 
+                    gap: isMobile ? '30px' : '30px', 
+                    maxWidth: '1600px', 
                     margin: '0 auto' 
                 }}>
+                    {/* Left Sidebar */}
+                    {!isMobile && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                            <RotatingList side="left" />
+                        </div>
+                    )}
+
                     {/* Chat Window */}
-                    <div className="glass" style={{ 
+                    <div className="glass-card" style={{ 
                         display: 'flex', 
                         flexDirection: 'column', 
                         height: isMobile ? '600px' : '750px', 
-                        borderRadius: '32px', 
-                        overflow: 'hidden',
-                        backgroundColor: 'rgba(255,255,255,0.01)'
+                        overflow: 'hidden'
                     }}>
                         {/* Header */}
-                        <div style={{ padding: '24px 32px', borderBottom: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.2)', display: 'flex', alignItems: 'center', gap: '16px' }}>
+                        <div style={{ padding: '32px', borderBottom: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'transparent', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', textAlign: 'center' }}>
                             <div style={{ 
-                                width: '48px', 
-                                height: '48px', 
+                                width: '64px', 
+                                height: '64px', 
                                 backgroundColor: 'var(--color-gold)', 
-                                borderRadius: '12px', 
+                                borderRadius: '16px', 
                                 display: 'flex', 
                                 alignItems: 'center', 
                                 justifyContent: 'center', 
-                                boxShadow: '0 0 20px rgba(252, 207, 49, 0.3)' 
+                                boxShadow: '0 0 30px rgba(252, 207, 49, 0.4)' 
                             }}>
-                                <Bot size={28} color="black" />
+                                <Bot size={36} color="black" />
                             </div>
                             <div>
-                                <h3 style={{ fontSize: '18px', fontWeight: '900', letterSpacing: '1px' }}>VSS MISSION AI</h3>
-                                <div className="flex items-center gap-2">
+                                <h3 style={{ fontSize: '3rem', fontWeight: '900', letterSpacing: '1px', lineHeight: '1' }}>AI CONSULTANT</h3>
+                                <div className="flex items-center justify-center gap-2 mt-2">
                                     <div style={{ width: '8px', height: '8px', backgroundColor: '#4ade80', borderRadius: '50%', boxShadow: '0 0 10px #4ade80' }}></div>
-                                    <p style={{ fontSize: '11px', fontWeight: '800', opacity: 0.6, letterSpacing: '1px' }}>AGENT ONLINE</p>
+                                    <p style={{ fontSize: '12px', fontWeight: '800', opacity: 0.8, letterSpacing: '2px' }}>AGENT ONLINE</p>
                                 </div>
                             </div>
-                            {!isMobile && (
-                                <div style={{ marginLeft: 'auto' }}>
-                                    <ShieldCheck size={24} color="var(--color-gold)" />
-                                </div>
-                            )}
                         </div>
 
                         {/* Messages */}
@@ -292,7 +277,7 @@ Transmit your query for analysis.`;
                         </div>
 
                         {/* Input Area */}
-                        <div style={{ padding: isMobile ? '20px' : '32px', backgroundColor: 'rgba(0,0,0,0.3)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                        <div style={{ padding: isMobile ? '20px' : '32px', backgroundColor: 'transparent', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                             <div className="flex gap-4">
                                 <input
                                     type="text"
@@ -335,8 +320,9 @@ Transmit your query for analysis.`;
 
                     {/* Sidebar */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                        <RotatingList side="right" />
                         {/* Status Panel */}
-                        <div className="glass" style={{ padding: '24px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(255,255,255,0.01)' }}>
+                        <div className="glass-card" style={{ padding: '24px' }}>
                             <h4 style={{ fontSize: '11px', fontWeight: '900', color: 'var(--color-gold)', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '20px' }}>
                                 Intelligence Hotlinks
                             </h4>
@@ -377,7 +363,7 @@ Transmit your query for analysis.`;
                         </div>
 
                         {/* Vehicle Status */}
-                        <div className="glass" style={{ padding: '24px', borderRadius: '24px', border: '1px solid rgba(255,60,60,0.1)', background: 'linear-gradient(135deg, rgba(255,60,60,0.05) 0%, transparent 100%)' }}>
+                        <div className="glass-card" style={{ padding: '24px' }}>
                             <div className="flex items-center gap-3" style={{ marginBottom: '15px' }}>
                                 <Car size={18} color="var(--color-primary-red)" />
                                 <h4 style={{ fontSize: '12px', fontWeight: '900', color: 'white' }}>MISSION VEHICLE</h4>
@@ -398,7 +384,7 @@ Transmit your query for analysis.`;
                         </div>
 
                         {/* Support Info */}
-                        <div className="glass" style={{ padding: '24px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                        <div className="glass-card" style={{ padding: '24px' }}>
                             <div className="flex items-center gap-3" style={{ marginBottom: '15px' }}>
                                 <Info size={18} color="var(--color-gold)" />
                                 <h4 style={{ fontSize: '12px', fontWeight: '900', color: 'white' }}>ENCRYPTED SUPPORT</h4>
@@ -413,6 +399,13 @@ Transmit your query for analysis.`;
                     </div>
                 </div>
             </div>
+
+            {/* AI Disclaimer Modal */}
+            <AIDisclaimerModal 
+                isOpen={showDisclaimer}
+                onAccept={handleDisclaimerAccept}
+                onDecline={handleDisclaimerDecline}
+            />
         </div>
     );
 };

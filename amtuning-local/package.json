@@ -5,14 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "mission-control": "vite --port 80 --host",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "node server.js",
+    "sync": "node scripts/sync-products.js full-sync",
+    "sync:products": "node scripts/sync-products.js products-only",
+    "sync:images": "node scripts/sync-products.js images-only",
+    "sync:test": "node scripts/sync-products.js test"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
+    "compression": "^1.7.4",
+    "express": "^4.18.2",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.562.0",
     "react": "^19.2.0",

@@ -1,217 +1,208 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-    MessageSquare, Users, Clock, ChevronRight, TrendingUp, 
-    Zap, Radio, Target, ArrowUp, ArrowDown, Share2, 
-    MoreHorizontal, Flame, Layout, Compass, Shield
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { MessageSquare, Users, Clock, ChevronRight, TrendingUp, Zap, Radio, Target } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Forums = () => {
-    const [filter, setFilter] = useState('hot');
-
-    const communities = [
-        { id: 'audi', name: 'Audi Tuning', icon: '🔵' },
-        { id: 'bmw', name: 'BMW Performance', icon: '⚪' },
-        { id: 'vw', name: 'VW / Audi Group', icon: '🔷' },
-        { id: 'porsche', name: 'Porsche Elite', icon: '🏎️' },
+    const brandForums = [
+        { id: 'audi', name: 'Audi', icon: '🔵', threads: 156, posts: 1243, description: 'A3, S3, RS3, A4, S4, RS4, A5, S5, Q5 and more', color: '#ff3c3c' },
+        { id: 'bmw', name: 'BMW', icon: '⚪', threads: 203, posts: 1876, description: 'M2, M3, M4, M5, 1-Series, 3-Series, 5-Series and more', color: '#2196f3' },
+        { id: 'volkswagen', name: 'Volkswagen', icon: '🔷', threads: 189, posts: 1567, description: 'Golf GTI, Golf R, Jetta GLI, Tiguan, Arteon and more', color: '#4caf50' },
+        { id: 'mercedes', name: 'Mercedes-Benz', icon: '⭐', threads: 87, posts: 654, description: 'AMG models, C-Class, E-Class, S-Class and more', color: '#ffffff' },
+        { id: 'porsche', name: 'Porsche', icon: '🏎️', threads: 64, posts: 412, description: '911, Cayman, Boxster, Cayenne, Macan and more', color: '#ff3c3c' }
     ];
 
-    const feedPosts = [
-        { 
-            id: 1, 
-            author: 'm3_vsspeed', 
-            community: 'bmw', 
-            title: 'Finally installed the Stage 2 kit on my F80. The torque is insane!', 
-            content: 'Just finished the installation of the VSSPEED Stage 2 package. The pulls are absolutely clinical. Dyno results coming next week.',
-            upvotes: 452, 
-            comments: 42, 
-            time: '2h ago',
-            tag: 'Review'
-        },
-        { 
-            id: 2, 
-            author: 'audi_enthusiast', 
-            community: 'audi', 
-            title: 'S3 vs RS3: Is the carbon intake upgrade worth the premium?', 
-            content: 'Comparing the airflow telemetrics between the two platforms. Seeing about 15% increase in throttle response on the RS3 specifically.',
-            upvotes: 289, 
-            comments: 112, 
-            time: '5h ago',
-            tag: 'Comparison'
-        },
-        { 
-            id: 3, 
-            author: 'track_demon', 
-            community: 'porsche', 
-            title: 'Track day at Mosport - Brakes held up perfectly', 
-            content: 'Temperature management was key. Highly recommend the new cooling ducts.',
-            upvotes: 156, 
-            comments: 14, 
-            time: '8h ago',
-            tag: 'Track Intel'
-        }
+    const topicForums = [
+        { id: 'product-reviews', name: 'Product Reviews', icon: '⭐', threads: 324, posts: 2156, description: 'Share your experience with parts and products' },
+        { id: 'install-guides', name: 'Install Guides & DIY', icon: '🔧', threads: 178, posts: 892, description: 'Step-by-step installation guides and tips' },
+        { id: 'tuning-software', name: 'Tuning & Software', icon: '💻', threads: 145, posts: 743, description: 'ECU tuning, flash tools, and software discussions' },
+        { id: 'general', name: 'General Discussion', icon: '💬', threads: 267, posts: 1432, description: 'Off-topic chat and community conversations' }
+    ];
+
+    const recentThreads = [
+        { id: 1, title: 'CTS Turbo Intake - 6 Month Review', author: 'GTI_Mike', forum: 'Volkswagen', replies: 23, time: '2h ago' },
+        { id: 2, title: 'Best exhaust for B9 S4?', author: 'AudiEnthusiast', forum: 'Audi', replies: 45, time: '4h ago' },
+        { id: 3, title: 'Stage 2 tune questions - Is it worth it?', author: 'TunerNewbie', forum: 'Tuning & Software', replies: 67, time: '6h ago' },
+        { id: 4, title: 'F80 M3 downpipe install guide', author: 'BMWTech', forum: 'BMW', replies: 12, time: '8h ago' }
     ];
 
     return (
-        <div style={{ background: '#050505', color: 'white', minHeight: '100vh' }}>
-            <div className="container" style={{ display: 'grid', gridTemplateColumns: '240px 1fr 300px', gap: '2rem', padding: '30px 1.5rem' }}>
-                
-                {/* Left Sidebar - Navigation */}
-                <aside style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
-                    <nav style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                        <NavButton active icon={<Layout size={20} />} label="Home Feed" />
-                        <NavButton icon={<Compass size={20} />} label="All Communities" />
-                        <NavButton icon={<TrendingUp size={20} />} label="Popular" />
-                        
-                        <div style={{ marginTop: '2rem', marginBottom: '1rem', paddingLeft: '12px', fontSize: '10px', fontWeight: '900', color: '#444', letterSpacing: '2px' }}>COMMUNITIES</div>
-                        {communities.map(c => (
-                            <Link key={c.id} to={`/forums/${c.id}`} style={{ textDecoration: 'none' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px 12px', borderRadius: '8px', fontSize: '0.9rem', color: '#aaa', cursor: 'pointer' }} className="hover-red">
-                                    <span style={{ fontSize: '1.2rem' }}>{c.icon}</span>
-                                    {c.name}
-                                </div>
-                            </Link>
-                        ))}
-                    </nav>
-                </aside>
+        <div style={{ background: 'transparent', color: 'white', minHeight: '100vh' }}>
+            <div className="container" style={{ padding: '60px 1.5rem 100px' }}>
+                {/* Breadcrumb */}
+                <div className="flex gap-2 items-center" style={{ fontSize: '13px', color: '#666', marginBottom: '40px' }}>
+                    <Link to="/" className="hover-red">Home</Link>
+                    <ChevronRight size={14} />
+                    <span style={{ color: 'var(--color-gold)' }}>Community Intelligence</span>
+                </div>
 
-                {/* Main Feed */}
-                <main>
-                    {/* Feed Filter */}
-                    <div className="glass" style={{ padding: '10px 20px', borderRadius: '12px', marginBottom: '1.5rem', display: 'flex', gap: '20px', border: '1px solid #1a1a1a' }}>
-                        <FilterItem active={filter === 'hot'} onClick={() => setFilter('hot')} icon={<Flame size={18} />} label="Hot" />
-                        <FilterItem active={filter === 'new'} onClick={() => setFilter('new')} icon={<Zap size={18} />} label="New" />
-                        <FilterItem active={filter === 'top'} onClick={() => setFilter('top')} icon={<Target size={18} />} label="Top" />
-                        
-                        <Link to="/forums/new" style={{ marginLeft: 'auto' }}>
-                            <button className="bg-red" style={{ padding: '8px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: '900' }}>
-                                CREATE POST
-                            </button>
-                        </Link>
+                {/* Header */}
+                <div className="flex justify-between items-end" style={{ marginBottom: '60px' }}>
+                    <div>
+                        <span className="punchline">Global Network</span>
+                        <h1 style={{ fontSize: '4rem', fontWeight: '900', marginTop: '0.5rem', letterSpacing: '-2px' }}>VSSPEED <span className="text-red">FORUMS</span></h1>
+                        <p style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', maxWidth: '600px' }}>Secure protocols for high-performance enthusiast coordination.</p>
                     </div>
+                    <Link to="/forums/new">
+                        <button className="bg-red" style={{ 
+                            padding: '18px 36px', 
+                            borderRadius: '12px', 
+                            fontWeight: '900', 
+                            fontSize: '14px', 
+                            textTransform: 'uppercase', 
+                            letterSpacing: '2px',
+                            boxShadow: '0 10px 30px rgba(255, 60, 60, 0.3)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}>
+                             <MessageSquare size={18} /> INITIATE POST
+                        </button>
+                    </Link>
+                </div>
 
-                    {/* Posts */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        {feedPosts.map(post => (
-                            <ForumPostCard key={post.id} post={post} />
-                        ))}
-                    </div>
-                </main>
-
-                {/* Right Sidebar - Intel & Rules */}
-                <aside style={{ position: 'sticky', top: '100px', height: 'fit-content', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    <div className="glass" style={{ padding: '1.5rem', borderRadius: '16px', border: '1px solid #1a1a1a' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
-                            <Shield size={20} color="var(--color-gold)" />
-                            <h3 style={{ fontSize: '0.9rem', fontWeight: '900' }}>VSS SECURE NETWORK</h3>
-                        </div>
-                        <p style={{ fontSize: '0.85rem', color: '#888', lineHeight: '1.5', marginBottom: '1.5rem' }}>
-                            The official performance coordination hub. Strictly for high-end automotive enthusiasts and technicians.
-                        </p>
-                        <div style={{ fontSize: '0.8rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                {/* Stats Bar */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '60px' }}>
+                    {[
+                        { label: 'Active Targets', value: '1,203', icon: <Target size={24} />, color: 'var(--color-primary-red)' },
+                        { label: 'Intel Shared', value: '8,564', icon: <TrendingUp size={24} />, color: 'var(--color-gold)' },
+                        { label: 'Operators', value: '3,456', icon: <Users size={24} />, color: '#4ade80' },
+                        { label: 'Live Signal', value: '127', icon: <Radio size={24} />, color: '#42a5f5' }
+                    ].map((stat, i) => (
+                        <div key={i} className="glass-card" style={{ 
+                            padding: '24px', 
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '20px'
+                        }}>
+                            <div style={{ color: stat.color, padding: '12px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px' }}>{stat.icon}</div>
                             <div>
-                                <div style={{ fontWeight: '900' }}>1.2M</div>
-                                <div style={{ color: '#555', fontSize: '9px' }}>OPERATIVES</div>
-                            </div>
-                            <div>
-                                <div style={{ fontWeight: '900' }}>420</div>
-                                <div style={{ color: '#555', fontSize: '9px' }}>ACTIVE NOW</div>
+                                <p style={{ fontSize: '28px', fontWeight: '900', color: 'white' }}>{stat.value}</p>
+                                <p style={{ fontSize: '10px', color: '#666', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800' }}>{stat.label}</p>
                             </div>
                         </div>
+                    ))}
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '60px' }}>
+                    <div>
+                        {/* Brand Forums */}
+                        <div className="flex items-center gap-3" style={{ marginBottom: '30px' }}>
+                            <Zap size={20} color="var(--color-gold)" />
+                            <h2 style={{ fontSize: '22px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px' }}>PLATFORM COORDINATION</h2>
+                        </div>
+                        
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '60px' }}>
+                            {brandForums.map(forum => (
+                                <Link key={forum.id} to={`/forums/${forum.id}`} style={{ textDecoration: 'none' }}>
+                                    <div className="glass-card glass-hover" style={{
+                                        padding: '24px 30px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '24px',
+                                        transition: 'all 0.3s'
+                                    }}
+                                        onMouseOver={(e) => { 
+                                            e.currentTarget.style.borderColor = forum.color; 
+                                            e.currentTarget.style.transform = 'translateX(10px)';
+                                        }}
+                                        onMouseOut={(e) => { 
+                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; 
+                                            e.currentTarget.style.transform = 'translateX(0)';
+                                        }}
+                                    >
+                                        <div style={{ fontSize: '40px', width: '60px', textAlign: 'center', filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.1))' }}>{forum.icon}</div>
+                                        <div style={{ flex: 1 }}>
+                                            <h3 style={{ fontSize: '20px', fontWeight: '900', marginBottom: '4px', letterSpacing: '1px' }}>{forum.name}</h3>
+                                            <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.4' }}>{forum.description}</p>
+                                        </div>
+                                        <div style={{ textAlign: 'right', display: 'flex', gap: '20px' }}>
+                                            <div style={{ minWidth: '70px' }}>
+                                                <p style={{ fontSize: '18px', fontWeight: '900', color: 'white' }}>{forum.threads}</p>
+                                                <p style={{ fontSize: '10px', color: '#555', textTransform: 'uppercase', fontWeight: '800' }}>Threads</p>
+                                            </div>
+                                            <div style={{ minWidth: '70px' }}>
+                                                <p style={{ fontSize: '18px', fontWeight: '900', color: 'var(--color-gold)' }}>{forum.posts}</p>
+                                                <p style={{ fontSize: '10px', color: '#555', textTransform: 'uppercase', fontWeight: '800' }}>Posts</p>
+                                            </div>
+                                        </div>
+                                        <ChevronRight size={20} color="#333" />
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+
+                        {/* Topic Forums */}
+                        <div className="flex items-center gap-3" style={{ marginBottom: '30px' }}>
+                            <MessageSquare size={20} color="var(--color-gold)" />
+                            <h2 style={{ fontSize: '22px', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px' }}>TACTICAL TOPICS</h2>
+                        </div>
+
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+                            {topicForums.map(forum => (
+                                <Link key={forum.id} to={`/forums/${forum.id}`} style={{ textDecoration: 'none' }}>
+                                    <div className="glass-card glass-hover" style={{
+                                        padding: '30px',
+                                        height: '100%',
+                                        transition: 'all 0.3s'
+                                    }}
+                                        onMouseOver={(e) => { 
+                                            e.currentTarget.style.borderColor = 'var(--color-gold)';
+                                        }}
+                                        onMouseOut={(e) => { 
+                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                                        }}
+                                    >
+                                        <div style={{ fontSize: '32px', marginBottom: '15px' }}>{forum.icon}</div>
+                                        <h3 style={{ fontSize: '18px', fontWeight: '900', marginBottom: '8px', color: 'white' }}>{forum.name}</h3>
+                                        <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: '20px', lineHeight: '1.5' }}>{forum.description}</p>
+                                        <div style={{ display: 'flex', gap: '15px', paddingTop: '15px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                                            <span style={{ fontSize: '11px', fontWeight: '800', color: 'white' }}>{forum.threads} THREADS</span>
+                                            <span style={{ fontSize: '11px', fontWeight: '800', color: 'var(--color-gold)' }}>{forum.posts} POSTS</span>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="glass" style={{ padding: '1.5rem', borderRadius: '16px', border: '1px solid #1a1a1a' }}>
-                        <h4 style={{ fontSize: '0.75rem', fontWeight: '900', color: '#444', marginBottom: '1rem' }}>TRENDING TOPICS</h4>
-                        <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                            <TrendingItem label="ECU Flash Protocols" count="2.1k posts" />
-                            <TrendingItem label="Dry Carbon Curing" count="845 posts" />
-                            <TrendingItem label="E85 Conversion kits" count="1.1k posts" />
-                        </ul>
-                    </div>
-                </aside>
+                    {/* Sidebar */}
+                    <div>
+                        <div className="glass" style={{ padding: '30px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '30px', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                            <h3 style={{ fontSize: '14px', fontWeight: '900', marginBottom: '24px', color: 'white', textTransform: 'uppercase', letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                <Clock size={16} color="var(--color-primary-red)" /> LIVE ACTIVITY
+                            </h3>
+                            <div className="flex flex-col gap-5">
+                                {recentThreads.map(thread => (
+                                    <Link key={thread.id} to={`/forums/thread/${thread.id}`} style={{ textDecoration: 'none' }}>
+                                        <div className="hover-red" style={{ paddingBottom: '16px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                            <p style={{ fontSize: '14px', fontWeight: '800', marginBottom: '6px', color: 'white', lineHeight: '1.4' }}>{thread.title}</p>
+                                            <div style={{ fontSize: '11px', color: '#666', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                                                <span>BY <strong style={{ color: '#aaa' }}>{thread.author}</strong></span>
+                                                <span style={{ color: 'var(--color-primary-red)', fontWeight: '800' }}>{thread.forum}</span>
+                                                <span>{thread.time}</span>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
 
+                        <div className="glass" style={{ padding: '30px', borderRadius: '24px', border: '1px solid var(--color-gold)', backgroundColor: 'rgba(212, 175, 55, 0.03)' }}>
+                            <h3 style={{ fontSize: '14px', fontWeight: '900', marginBottom: '20px', color: 'var(--color-gold)', textTransform: 'uppercase', letterSpacing: '2px' }}>CONDUCT PROTOCOLS</h3>
+                            <ul style={{ fontSize: '12px', lineHeight: '2', fontWeight: '700', color: '#aaa' }}>
+                                <li style={{ display: 'flex', gap: '10px' }}><span style={{ color: 'var(--color-gold)' }}>•</span> EXECUTE SEARCH PRIOR TO POSTING</li>
+                                <li style={{ display: 'flex', gap: '10px' }}><span style={{ color: 'var(--color-gold)' }}>•</span> MAINTAIN HIGH-LEVEL RESPECT</li>
+                                <li style={{ display: 'flex', gap: '10px' }}><span style={{ color: 'var(--color-gold)' }}>•</span> NO COVERT ADVERTISING</li>
+                                <li style={{ display: 'flex', gap: '10px' }}><span style={{ color: 'var(--color-gold)' }}>•</span> PROTECT COMMUNITY INTELLIGENCE</li>
+                                <li style={{ display: 'flex', gap: '10px' }}><span style={{ color: 'var(--color-gold)' }}>•</span> SHARE PERFORMANCE TELEMETRY</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
 };
-
-const NavButton = ({ active, icon, label }) => (
-    <div style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        gap: '12px', 
-        padding: '12px 15px', 
-        borderRadius: '8px', 
-        background: active ? 'rgba(255,255,255,0.05)' : 'transparent',
-        color: active ? 'white' : '#666',
-        cursor: 'pointer',
-        fontWeight: active ? '900' : '600',
-        fontSize: '0.9rem'
-    }}>
-        {icon}
-        {label}
-    </div>
-);
-
-const FilterItem = ({ active, onClick, icon, label }) => (
-    <div 
-        onClick={onClick}
-        style={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '8px', 
-            cursor: 'pointer',
-            color: active ? 'var(--color-gold)' : '#666',
-            fontWeight: active ? '900' : '600',
-            fontSize: '0.9rem'
-        }}
-    >
-        {icon}
-        {label}
-    </div>
-);
-
-const ForumPostCard = ({ post }) => (
-    <div className="glass-card" style={{ display: 'flex', borderRadius: '12px', overflow: 'hidden', border: '1px solid #121215', background: '#0a0a0c' }}>
-        {/* Voting */}
-        <div style={{ width: '45px', padding: '15px 0', background: 'rgba(255,255,255,0.01)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-            <ArrowUp size={20} className="hover-red" style={{ cursor: 'pointer', color: '#444' }} />
-            <span style={{ fontSize: '12px', fontWeight: '900', color: 'white' }}>{post.upvotes}</span>
-            <ArrowDown size={20} className="hover-red" style={{ cursor: 'pointer', color: '#444' }} />
-        </div>
-
-        {/* Post Main */}
-        <div style={{ padding: '15px 20px', flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '10px', fontSize: '11px', color: '#555' }}>
-                <span style={{ color: 'white', fontWeight: '900' }}>r/{post.community}</span>
-                <span>• Posted by u/{post.author}</span>
-                <span>• {post.time}</span>
-                <span style={{ background: 'rgba(212, 175, 55, 0.1)', color: 'var(--color-gold)', padding: '2px 8px', borderRadius: '4px', fontWeight: '800' }}>{post.tag}</span>
-            </div>
-            <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '10px', lineHeight: '1.4' }}>{post.title}</h3>
-            <p style={{ color: '#888', fontSize: '0.9rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>{post.content}</p>
-
-            <div style={{ display: 'flex', gap: '20px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#555', fontWeight: '800' }}>
-                    <MessageSquare size={16} /> {post.comments} Comments
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#555', fontWeight: '800' }}>
-                    <Share2 size={16} /> Share
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#555', fontWeight: '800' }}>
-                    <MoreHorizontal size={16} />
-                </div>
-            </div>
-        </div>
-    </div>
-);
-
-const TrendingItem = ({ label, count }) => (
-    <li style={{ cursor: 'pointer' }}>
-        <div style={{ fontSize: '0.85rem', fontWeight: '800', color: 'white' }}>#{label}</div>
-        <div style={{ fontSize: '10px', color: '#444' }}>{count}</div>
-    </li>
-);
 
 export default Forums;

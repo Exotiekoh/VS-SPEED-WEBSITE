@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Zap, Globe } from 'lucide-react';
 import logo from '../../assets/vsspeed-logo-transparent.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { useCart } from '../../contexts/CartContext';
 
 const Header = () => {
@@ -64,7 +64,8 @@ const Header = () => {
                             <li><Link to="/custom-fabrication" className="nav-link">CUSTOM FAB</Link></li>
                             <li><Link to="/garage" className="nav-link">GARAGE</Link></li>
                             <li><Link to="/forums" className="nav-link">FORUM</Link></li>
-                            <li><Link to="/ai-assistant" className="nav-link text-gold">AI TUNER</Link></li>
+                            <li><Link to="/ai-tuner" className="nav-link text-gold">AI TUNER</Link></li>
+                            <li><Link to="/ai-consultant" className="nav-link">AI CONSULTANT</Link></li>
                         </ul>
                     </nav>
 
@@ -157,7 +158,8 @@ const Header = () => {
                                 <li><Link to="/custom-fabrication" onClick={() => setIsMenuOpen(false)}>Custom Fabrication</Link></li>
                                 <li><Link to="/garage" onClick={() => setIsMenuOpen(false)}>My Garage</Link></li>
                                 <li><Link to="/forums" onClick={() => setIsMenuOpen(false)}>Community</Link></li>
-                                <li><Link to="/ai-assistant" onClick={() => setIsMenuOpen(false)}>AI Tuning</Link></li>
+                                <li><Link to="/ai-tuner" onClick={() => setIsMenuOpen(false)}>AI Tuning</Link></li>
+                                <li><Link to="/ai-consultant" onClick={() => setIsMenuOpen(false)}>AI Consultant</Link></li>
                             </ul>
                         </div>
                     </motion.div>
@@ -168,4 +170,3 @@ const Header = () => {
 };
 
 export default Header;
-

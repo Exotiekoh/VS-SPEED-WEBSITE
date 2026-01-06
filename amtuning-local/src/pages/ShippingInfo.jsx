@@ -1,13 +1,10 @@
 import { Truck, Clock, Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const ShippingInfo = () => {
     return (
-        <div style={{ background: 'var(--color-bg-deep)', minHeight: '100vh', color: 'white', padding: '120px 0' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh', color: 'white', padding: '120px 0' }}>
             <div className="container" style={{ maxWidth: '800px' }}>
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
+                <div
                     className="glass"
                     style={{ padding: '60px', borderRadius: 'var(--border-radius-lg)' }}
                 >
@@ -54,7 +51,7 @@ const ShippingInfo = () => {
                             </p>
                         </section>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </div>
     );

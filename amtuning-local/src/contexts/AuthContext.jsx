@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useState } from 'react';
 import { checkCredentials } from '../data/userDatabase';
 
 const AuthContext = createContext();
@@ -6,19 +7,13 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        // Check local storage for existing session
+    const [currentUser, setCurrentUser] = useState(() => {
         const storedUser = localStorage.getItem('vsspeed_user');
-        if (storedUser) {
-            setCurrentUser(JSON.parse(storedUser));
-            setIsAuthenticated(true);
-        }
-        setLoading(false);
-    }, []);
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        return !!localStorage.getItem('vsspeed_user');
+    });
 
     const login = (username, password) => {
         const user = checkCredentials(username, password);
@@ -47,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={value}>
-            {!loading && children}
+            {children}
         </AuthContext.Provider>
     );
 };

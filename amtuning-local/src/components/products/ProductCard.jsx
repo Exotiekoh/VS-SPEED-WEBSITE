@@ -1,13 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ShoppingBag, Zap, Eye, Heart, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../../contexts/CartContext';
+import { useToast } from '../../contexts/ToastContext';
 
 const ProductCard = ({ product }) => {
     const { addToCart } = useCart();
+    const { showToast } = useToast();
+    const navigate = useNavigate();
     const { id, title, price, image, brand, category, originalPrice } = product;
     const [isHovered, setIsHovered] = useState(false);
     const [isAdded, setIsAdded] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState(() => {
+        const wishlist = JSON.parse(localStorage.getItem('vss_wishlist') || '[]');
+        return wishlist.includes(id);
+    });
+    const [rotation, setRotation] = useState({ x: 0, y: 0 });
+    const cardRef = useRef(null);
+
+
+    const handleMouseMove = (e) => {
+        if (!cardRef.current) return;
+        const rect = cardRef.current.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -15; // -15 to 15 degrees
+        const rotateY = ((x - centerX) / centerX) * 15; // -15 to 15 degrees
+        
+        setRotation({ x: rotateX, y: rotateY });
+    };
+
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        setRotation({ x: 0, y: 0 });
+    };
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -17,14 +47,40 @@ const ProductCard = ({ product }) => {
         setTimeout(() => setIsAdded(false), 2000);
     };
 
+    const handleWishlist = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const wishlist = JSON.parse(localStorage.getItem('vss_wishlist') || '[]');
+        
+        if (isWishlisted) {
+            const updated = wishlist.filter(itemId => itemId !== id);
+            localStorage.setItem('vss_wishlist', JSON.stringify(updated));
+            setIsWishlisted(false);
+            showToast('Removed from wishlist', 'info');
+        } else {
+            wishlist.push(id);
+            localStorage.setItem('vss_wishlist', JSON.stringify(wishlist));
+            setIsWishlisted(true);
+            showToast('Added to wishlist!', 'success');
+        }
+    };
+
+    const handleQuickView = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigate(`/products/${id}`);
+    };
+
     const isOnSale = originalPrice && originalPrice !== price;
     
     return (
         <Link to={`/products/${id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div
+                ref={cardRef}
                 className={`glass-card gpu-layer card-animated hover-glow-red ${isHovered ? 'cool-outline' : ''}`}
                 onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseLeave={handleMouseLeave}
+                onMouseMove={handleMouseMove}
                 style={{
                     height: '100%',
                     display: 'flex',
@@ -32,7 +88,14 @@ const ProductCard = ({ product }) => {
                     overflow: 'hidden',
                     border: '1px solid var(--color-border-glass)',
                     borderRadius: 'var(--border-radius-md)',
-                    position: 'relative'
+                    position: 'relative',
+                    perspective: '1000px',
+                    transformStyle: 'preserve-3d',
+                    transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                    transition: 'transform 0.1s ease-out, box-shadow 0.3s ease',
+                    boxShadow: isHovered 
+                        ? `${rotation.y * 2}px ${rotation.x * 2}px 40px rgba(255, 0, 0, 0.4)` 
+                        : '0 4px 20px rgba(0, 0, 0, 0.3)'
                 }}
             >
                 {/* Sale Badge */}
@@ -102,37 +165,40 @@ const ProductCard = ({ product }) => {
                         }}
                     >
                         <button 
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                            onClick={handleWishlist}
                             className="ripple"
                             style={{
                                 width: '36px',
                                 height: '36px',
                                 borderRadius: '8px',
-                                background: 'rgba(0,0,0,0.8)',
-                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: isWishlisted ? 'rgba(255,0,0,0.9)' : 'rgba(0,0,0,0.8)',
+                                border: `1px solid ${isWishlisted ? 'rgba(255,0,0,0.5)' : 'rgba(255,255,255,0.1)'}`,
                                 color: 'white',
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                transition: 'all 0.3s ease',
+                                transform: isWishlisted ? 'scale(1.1)' : 'scale(1)'
                             }}
                         >
-                            <Heart size={16} />
+                            <Heart size={16} fill={isWishlisted ? 'white' : 'none'} />
                         </button>
                         <button 
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                            onClick={handleQuickView}
                             className="ripple"
                             style={{
                                 width: '36px',
                                 height: '36px',
                                 borderRadius: '8px',
                                 background: 'rgba(0,0,0,0.8)',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                color: 'white',
+                                border: '1px solid rgba(212,175,55,0.3)',
+                                color: 'var(--color-gold)',
                                 cursor: 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
-                                justifyContent: 'center'
+                                justifyContent: 'center',
+                                transition: 'all 0.3s ease'
                             }}
                         >
                             <Eye size={16} />

@@ -70,7 +70,8 @@ const Cart = () => {
     }
 
     return (
-        <div className="container" style={{ padding: '60px 1.5rem 120px' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh', color: 'white' }}>
+            <div className="container" style={{ padding: '60px 1.5rem 120px' }}>
             {/* Breadcrumb */}
             <div className="flex gap-2 items-center" style={{ fontSize: '13px', color: '#666', marginBottom: '40px' }}>
                 <Link to="/" className="hover-red">Home</Link>
@@ -95,37 +96,52 @@ const Cart = () => {
 
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '30px' }}>
                         {cartItems.map(item => (
-                            <div key={item.id} className="glass" style={{ display: 'grid', gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', gap: '20px', alignItems: 'center', padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                                <Link to={`/products/${item.id}`} className="flex items-center gap-6">
+                            <motion.div 
+                                key={item.id} 
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                className="glass-card" 
+                                style={{ 
+                                    display: 'grid', 
+                                    gridTemplateColumns: '3fr 1fr 1fr 1fr 40px', 
+                                    gap: '20px', 
+                                    alignItems: 'center', 
+                                    padding: '24px', 
+                                    borderRadius: '16px', 
+                                    border: '1px solid rgba(255,255,255,0.05)',
+                                    background: 'rgba(0,0,0,0.6)'
+                                }}
+                            >
+                                <Link to={`/products/${item.id}`} className="flex items-center gap-6 group">
                                     <div style={{ width: '100px', height: '100px', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                        <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }} className="group-hover:scale-110" />
                                     </div>
                                     <div>
-                                        <h4 style={{ fontSize: '16px', fontWeight: '800', marginBottom: '6px', color: 'white' }}>{item.title}</h4>
-                                        <p style={{ fontSize: '11px', color: 'var(--color-gold)', fontWeight: '700', letterSpacing: '1px' }}>ID: {item.sku || `VSS-${item.id}`}</p>
+                                        <h4 style={{ fontSize: '16px', fontWeight: '900', marginBottom: '6px', color: 'white' }}>{item.title}</h4>
+                                        <p style={{ fontSize: '11px', color: 'var(--color-gold)', fontWeight: '900', letterSpacing: '1px' }}>ID: {item.sku || `VSS-00${item.id}`}</p>
                                     </div>
                                 </Link>
-                                <p style={{ textAlign: 'center', fontWeight: '700', color: '#aaa' }}>
+                                <p style={{ textAlign: 'center', fontWeight: '900', color: 'rgba(255,255,255,0.4)', fontSize: '14px' }}>
                                     {typeof item.price === 'string' ? item.price : `$${item.price.toLocaleString()}`}
                                 </p>
                                 <div className="flex items-center justify-center">
                                     <div className="flex items-center" style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)} style={{ padding: '10px', color: 'white', background: 'none' }}>
+                                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)} style={{ padding: '10px', color: 'white', background: 'none', border: 'none', cursor: 'pointer' }}>
                                             <Minus size={14} />
                                         </button>
-                                        <span style={{ width: '30px', textAlign: 'center', fontWeight: '800', fontSize: '14px' }}>{item.quantity}</span>
-                                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)} style={{ padding: '10px', color: 'white', background: 'none' }}>
+                                        <span style={{ width: '30px', textAlign: 'center', fontWeight: '900', fontSize: '14px' }}>{item.quantity}</span>
+                                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)} style={{ padding: '10px', color: 'white', background: 'none', border: 'none', cursor: 'pointer' }}>
                                             <Plus size={14} />
                                         </button>
                                     </div>
                                 </div>
-                                <p style={{ textAlign: 'right', fontWeight: '900', color: 'var(--color-primary-red)', fontSize: '18px' }}>
+                                <p style={{ textAlign: 'right', fontWeight: '1000', color: 'var(--color-primary-red)', fontSize: '20px', textShadow: '0 0 15px rgba(210,41,49,0.3)' }}>
                                     ${((typeof item.price === 'string' ? parseFloat(item.price.replace(/[$, CAD, USD]/g, '')) : item.price) * item.quantity).toLocaleString()}
                                 </p>
-                                <button onClick={() => removeFromCart(item.id)} style={{ color: '#444', transition: 'color 0.2s' }} className="hover-red">
+                                <button onClick={() => removeFromCart(item.id)} style={{ color: 'rgba(255,255,255,0.1)', background: 'none', border: 'none', cursor: 'pointer', transition: 'color 0.2s' }} className="hover-red">
                                     <Trash2 size={20} />
                                 </button>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
 
@@ -203,15 +219,15 @@ const Cart = () => {
                         </button>
 
                         <div style={{ marginTop: '40px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '30px' }}>
-                            <p style={{ textAlign: 'center', fontSize: '11px', color: '#555', marginBottom: '20px', fontWeight: '800', letterSpacing: '1px' }}>SECURE PAYMENT GATEWAYS</p>
-                            <div className="flex justify-center gap-4 grayscale opacity-40">
-                                <img src="https://placehold.co/50x30/000/fff?text=VISA" alt="Visa" style={{ height: '24px' }} />
-                                <img src="https://placehold.co/50x30/000/fff?text=MC" alt="Mastercard" style={{ height: '24px' }} />
-                                <img src="https://placehold.co/50x30/000/fff?text=AMEX" alt="Amex" style={{ height: '24px' }} />
-                                <img src="https://placehold.co/50x30/000/fff?text=PP" alt="PayPal" style={{ height: '24px' }} />
+                            <p style={{ textAlign: 'center', fontSize: '10px', color: 'rgba(255,255,255,0.3)', marginBottom: '20px', fontWeight: '1000', letterSpacing: '2px' }}>SECURE PAYMENT GATEWAYS</p>
+                            <div className="flex justify-center gap-3">
+                                {['VISA', 'MASTERCARD', 'AMEX', 'PAYPAL'].map(p => (
+                                    <span key={p} style={{ fontSize: '8px', fontWeight: '1000', color: 'var(--color-gold)', border: '1px solid rgba(212, 175, 55, 0.2)', padding: '2px 6px', borderRadius: '3px', letterSpacing: '1px' }}>{p}</span>
+                                ))}
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>

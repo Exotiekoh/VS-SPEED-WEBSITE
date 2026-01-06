@@ -30,7 +30,7 @@ export const CartProvider = ({ children }) => {
                 );
             }
             // Remove quantity from product if it exists to avoid confusion, then add it back with qtyToAdd
-            const { quantity, ...productData } = product;
+            const { quantity: _quantity, ...productData } = product;
             return [...prevItems, { ...productData, quantity: qtyToAdd }];
         });
     };

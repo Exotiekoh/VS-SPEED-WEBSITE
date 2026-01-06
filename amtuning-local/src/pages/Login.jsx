@@ -30,7 +30,7 @@ const Login = () => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            background: 'var(--color-bg-deep)',
+            background: 'transparent',
             padding: '20px'
         }}>
             <motion.div 

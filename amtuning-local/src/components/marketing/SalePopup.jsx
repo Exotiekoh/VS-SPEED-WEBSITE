@@ -6,6 +6,14 @@ import { Link } from 'react-router-dom';
 const SalePopup = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    
+    // Pre-generate sparkle positions to avoid Math.random during render
+    const [sparklePositions] = useState(() => 
+        Array.from({ length: 6 }, () => ({
+            top: `${20 + Math.random() * 60}%`,
+            left: `${10 + Math.random() * 80}%`
+        }))
+    );
 
     useEffect(() => {
         // Check screen size for responsive adjustments
@@ -124,7 +132,7 @@ const SalePopup = () => {
 
                             {/* Sparkle Effects */}
                             <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-                                {[...Array(6)].map((_, i) => (
+                                {sparklePositions.map((pos, i) => (
                                     <motion.div
                                         key={i}
                                         animate={{ 
@@ -138,8 +146,8 @@ const SalePopup = () => {
                                         }}
                                         style={{
                                             position: 'absolute',
-                                            top: `${20 + Math.random() * 60}%`,
-                                            left: `${10 + Math.random() * 80}%`,
+                                            top: pos.top,
+                                            left: pos.left,
                                         }}
                                     >
                                         <Sparkles size={14} color="#d4af37" />

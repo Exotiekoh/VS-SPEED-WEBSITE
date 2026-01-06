@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useMemo } from 'react';
 import { ChevronDown, ChevronUp, X } from 'lucide-react';
+
 
 const ProductFilter = ({ categories, onFilterChange, selectedFilters }) => {
     const [expandedSections, setExpandedSections] = useState({
@@ -10,6 +10,17 @@ const ProductFilter = ({ categories, onFilterChange, selectedFilters }) => {
     });
 
     const [priceRange, setPriceRange] = useState({ min: 0, max: 2000 });
+    
+    // Pre-generate product counts to avoid Math.random during render
+    const categoryCounts = useMemo(() => {
+        return categories.reduce((acc, category) => {
+            // Use deterministic generation based on category name character codes
+            // to satisfy linter purity rules while keeping "random-looking" numbers
+            const charCodeSum = category.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+            acc[category] = (charCodeSum % 20) + 1;
+            return acc;
+        }, {});
+    }, [categories]);
 
     const toggleSection = (section) => {
         setExpandedSections(prev => ({
@@ -160,7 +171,7 @@ const ProductFilter = ({ categories, onFilterChange, selectedFilters }) => {
                                         color: 'white'
                                     }}
                                 >
-                                    {Math.floor(Math.random() * 20) + 1}
+                                    {categoryCounts[category]}
                                 </span>
                             </motion.label>
                         ))}

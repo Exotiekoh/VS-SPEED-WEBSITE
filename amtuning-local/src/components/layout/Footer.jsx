@@ -24,7 +24,7 @@ const Footer = () => {
                     {/* Column 1: About */}
                     <div>
                         <img src={logo} alt="VSSPEED Global" style={{ height: '50px', marginBottom: '20px' }} />
-                        <p style={{ lineHeight: '1.8', marginBottom: '24px', color: '#888' }}>
+                        <p style={{ lineHeight: '1.8', marginBottom: '24px', color: 'rgba(255,255,255,0.5)', fontWeight: '500' }}>
                             Welcome to VS Speed! The only source for any of your best & cheapest performance parts! We take pride in our quality and pricing so you as the customer can save your money with pure reassurance and confidence that what you get will improve power, fix your problems and give you peace of mind. Welcome to the family!
                         </p>
                         <div className="flex gap-4">
@@ -44,10 +44,10 @@ const Footer = () => {
                     <div>
                         <h4 style={{ color: 'var(--color-text-main)', marginBottom: '24px', fontSize: '14px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Links</h4>
                         <ul className="flex flex-col gap-3">
-                            <li><Link to="/products" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">All Products</Link></li>
-                            <li><Link to="/forums" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Community Forums</Link></li>
-                            <li><Link to="/ai-assistant" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">AI Assistant</Link></li>
-                            <li><Link to="/products" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">On Sale</Link></li>
+                            <li><Link to="/products" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">All Products</Link></li>
+                            <li><Link to="/forums" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Community Forums</Link></li>
+                            <li><Link to="/ai-tuner" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">AI Assistant</Link></li>
+                            <li><Link to="/products" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">On Sale</Link></li>
                         </ul>
                     </div>
 
@@ -55,11 +55,11 @@ const Footer = () => {
                     <div>
                         <h4 style={{ color: 'var(--color-text-main)', marginBottom: '24px', fontSize: '14px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>Information</h4>
                         <ul className="flex flex-col gap-3">
-                            <li><Link to="/about" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">About Us</Link></li>
-                            <li><Link to="/shipping" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Shipping Policy</Link></li>
-                            <li><Link to="/returns-refunds-policy" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Returns & Refunds</Link></li>
-                            <li><Link to="/disclaimer" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Safety Disclaimer</Link></li>
-                            <li><Link to="/privacy-policy" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Privacy Policy</Link></li>
+                            <li><Link to="/about" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">About Us</Link></li>
+                            <li><Link to="/shipping" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Shipping Policy</Link></li>
+                            <li><Link to="/returns-refunds-policy" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Returns & Refunds</Link></li>
+                            <li><Link to="/disclaimer" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Safety Disclaimer</Link></li>
+                            <li><Link to="/privacy-policy" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Privacy Policy</Link></li>
                         </ul>
                     </div>
 
@@ -67,10 +67,10 @@ const Footer = () => {
                     <div>
                         <h4 style={{ color: 'var(--color-text-main)', marginBottom: '24px', fontSize: '14px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>Mission Control</h4>
                         <ul className="flex flex-col gap-3">
-                            <li><Link to="/garage" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">My Garage</Link></li>
-                            <li><Link to="/account/payments" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Payment Control</Link></li>
-                            <li><Link to="/part-hunter" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Part Hunter</Link></li>
-                            <li><Link to="/custom-fabrication" style={{ color: '#888', transition: 'color 0.3s' }} className="hover-red">Custom Fab</Link></li>
+                            <li><Link to="/garage" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">My Garage</Link></li>
+                            <li><Link to="/account/payments" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Payment Control</Link></li>
+                            <li><Link to="/part-hunter" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Part Hunter</Link></li>
+                            <li><Link to="/custom-fabrication" style={{ color: 'rgba(255,255,255,0.4)', transition: 'color 0.3s' }} className="hover-red">Custom Fab</Link></li>
                         </ul>
                     </div>
 
@@ -100,13 +100,12 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div style={{ borderTop: '1px solid #333', paddingTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-                    <p style={{ color: '#666', fontSize: '13px' }}>&copy; 2024 VSSPEED Global (www.vsspeed.org). All Rights Reserved.</p>
+                <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                    <p style={{ color: 'rgba(255,255,255,0.2)', fontSize: '13px', fontWeight: '800' }}>&copy; 2024 VSSPEED Global (www.vsspeed.org). All Rights Reserved.</p>
                     <div className="flex gap-4">
-                        <img src="https://placehold.co/50x30/333/fff?text=VISA" alt="Visa" style={{ height: '24px', opacity: 0.8 }} />
-                        <img src="https://placehold.co/50x30/333/fff?text=MC" alt="Mastercard" style={{ height: '24px', opacity: 0.8 }} />
-                        <img src="https://placehold.co/50x30/333/fff?text=AMEX" alt="Amex" style={{ height: '24px', opacity: 0.8 }} />
-                        <img src="https://placehold.co/50x30/333/fff?text=PP" alt="PayPal" style={{ height: '24px', opacity: 0.8 }} />
+                        {['VISA', 'MASTERCARD', 'AMEX', 'PAYPAL'].map(p => (
+                            <span key={p} style={{ fontSize: '9px', fontWeight: '900', color: 'var(--color-gold)', border: '1px solid rgba(212, 175, 55, 0.2)', padding: '4px 8px', borderRadius: '4px', background: 'rgba(212, 175, 55, 0.05)', letterSpacing: '1px' }}>{p}</span>
+                        ))}
                     </div>
                 </div>
             </div>

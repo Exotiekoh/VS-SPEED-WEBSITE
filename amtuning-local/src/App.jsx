@@ -16,16 +16,21 @@ import Forums from './pages/Forums';
 import Forum from './pages/Forum';
 import Thread from './pages/Thread';
 import NewPost from './pages/NewPost';
-import AIAssistant from './pages/AIAssistant';
+import AiTuner from './pages/AiTuner';
 import PartHunter from './pages/PartHunter';
 import PaymentSettings from './pages/PaymentSettings';
 import Login from './pages/Login'; 
 import AdminDashboard from './pages/AdminDashboard'; 
 import AdminLogin from './pages/AdminLogin'; 
 import UserProfile from './pages/UserProfile'; 
+import ScrollToTop from './components/ui/ScrollToTop';
+import Background3D from './components/ui/Background3D';
 
 // Auth & Security
 import { AuthProvider } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { VIPProvider } from './contexts/VIPContext';
 import SecurityGateway from './components/ui/SecurityGateway';
 
 // Placeholder components
@@ -34,12 +39,27 @@ const Contact = () => <TextPage title="Contact Us" content="Support: vsspeedsupp
 import ShippingInfo from './pages/ShippingInfo';
 import Disclaimer from './pages/Disclaimer';
 import CustomFabrication from './pages/CustomFabrication';
+import AIMechanic from './pages/AIMechanic';
+import AIAssistant from './pages/AIAssistant';
 
 function App() {
   return (
-    <AuthProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <VIPProvider>
       <SecurityGateway>
-        <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%', background: 'var(--color-bg-deep)' }}>
+        <ScrollToTop />
+        <Background3D />
+        <div className="app" style={{ 
+          display: 'flex', 
+          flexDirection: 'column', 
+          minHeight: '100vh', 
+          width: '100%', 
+          background: 'transparent', // Changed from var(--color-bg-deep) to show 3D ocean
+          position: 'relative',
+          zIndex: 1
+        }}>
           <EmailPopup />
           <SalePopup />
           <FloatingAd />
@@ -63,7 +83,9 @@ function App() {
               <Route path="/forums/new" element={<NewPost />} />
               <Route path="/forums/:forumId" element={<Forum />} />
               <Route path="/forums/thread/:threadId" element={<Thread />} />
-              <Route path="/ai-assistant" element={<AIAssistant />} />
+              <Route path="/ai-tuner" element={<AiTuner />} />
+              <Route path="/ai-mechanic" element={<AIMechanic />} />
+              <Route path="/ai-consultant" element={<AIAssistant />} />
               <Route path="/part-hunter" element={<PartHunter />} />
               <Route path="/shipping" element={<ShippingInfo />} />
               <Route path="/disclaimer" element={<Disclaimer />} />
@@ -75,7 +97,10 @@ function App() {
           <Footer />
         </div>
       </SecurityGateway>
+    </VIPProvider>
     </AuthProvider>
+    </ToastProvider>
+    </ThemeProvider>
   );
 }
 

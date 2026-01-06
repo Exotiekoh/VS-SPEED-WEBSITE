@@ -1,11 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400..900;1,400..900&display=swap');
+
 
 @import './variables.css';
 
+@import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=Monoton&family=Orbitron:wght@400;900&display=swap');
+
+.pipes {
+    font-family: 'Bubblegum Sans', cursive;
+}
+
+.sparkplugs {
+    font-family: 'Monoton', cursive;
+    color: #00e5ff;
+    text-shadow: 0 0 5px #00e5ff;
+}
+
+.tuning {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
 * {
     box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    margin: 3;
+    padding: 1;
 }
 
 html {
@@ -321,7 +340,7 @@ a {
     background: #555;
 }
 
-/* Product Card Button - AMTuning Style */
+/* Product Card Button - VS SPEED Style */
 .btn-add-to-cart {
     margin-top: 15px;
     width: 100%;
@@ -344,7 +363,7 @@ a {
     box-shadow: 0 4px 12px rgba(210, 41, 49, 0.3);
 }
 
-/* Product Card - AMTuning Style */
+/* Product Card - VS SPEED Style */
 .product-card {
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius-sm);
@@ -371,7 +390,7 @@ a {
     transform: scale(1.05);
 }
 
-/* Navigation Link Animation - AMTuning Style */
+/* Navigation Link Animation - VS SPEED Style */
 .nav-link {
     position: relative;
     padding-bottom: 4px;
@@ -392,12 +411,12 @@ a {
     width: 100%;
 }
 
-/* Hero Section Gradient - AMTuning Style */
+/* Hero Section Gradient - VS SPEED Style */
 .hero-gradient-overlay {
     background: linear-gradient(135deg, rgba(28, 46, 74, 0.85) 0%, rgba(0, 0, 0, 0.6) 100%);
 }
 
-/* Badge - AMTuning Style */
+/* Badge - VS SPEED Style */
 .badge {
     display: inline-block;
     padding: 4px 10px;
@@ -418,7 +437,7 @@ a {
     color: var(--color-text-main);
 }
 
-/* Section Title - AMTuning Style */
+/* Section Title - VS SPEED Style */
 .section-title {
     font-size: 32px;
     text-transform: uppercase;
@@ -455,7 +474,7 @@ a {
     animation: fadeInUp 0.6s ease-out forwards;
 }
 
-/* Brand Logo Strip - AMTuning Style */
+/* Brand Logo Strip - VS SPEED Style */
 .brand-strip {
     display: flex;
     align-items: center;
@@ -548,6 +567,7 @@ a {
 .text-exotic {
     background: linear-gradient(135deg, #fff 0%, #b0b0b0 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }

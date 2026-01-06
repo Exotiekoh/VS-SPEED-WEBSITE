@@ -1,16 +1,18 @@
 :root {
-  /* Brand Colors */
-  --color-bg-deep: #050505;
-  --color-primary-red: #ff0000;
-  --color-gold: #fccf31;
+  /* Brand Colors - NEON THRASHER THEME */
+  --color-bg-deep: #000000;
+  --color-primary-red: #39ff14; /* Neon Green (Replacing Red) */
+  --color-gold: #00ffff; /* Neon Blue (Replacing Gold) */
+  --color-neon-pink: #ff00ff; /* New Accent */
+  
   --color-border-glass: rgba(255, 255, 255, 0.1);
   --color-text-main: #ffffff;
   --color-text-muted: #888888;
   --color-text-body: #aaaaaa;
 
   /* Shadows & Glows */
-  --glow-red: 0 0 30px rgba(255, 0, 0, 0.5);
-  --glow-gold: 0 0 20px rgba(252, 207, 49, 0.3);
+  --glow-red: 0 0 30px rgba(57, 255, 20, 0.5); /* Green Glow */
+  --glow-gold: 0 0 20px rgba(0, 255, 255, 0.3); /* Blue Glow */
   --shadow-deep: 0 20px 50px rgba(0, 0, 0, 0.9);
 
   /* Layout */
@@ -23,7 +25,7 @@
   line-height: 1.5;
   font-weight: 500;
   color: var(--color-text-main);
-  background-color: var(--color-bg-deep);
+  background-color: #000;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -36,7 +38,15 @@
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: var(--color-bg-deep);
+  background-color: #000 !important;
+}
+
+.app, 
+main,
+section,
+.container,
+.page-container {
+  background-color: transparent !important;
 }
 
 .container {
@@ -47,17 +57,28 @@ body {
 }
 
 /* Typography Utilities */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 900;
+/* Typography Utilities */
+h1, h2, h3, h4, h5, h6, .thrasher-text {
+  font-family: 'Metal Mania', cursive;
+  font-weight: 400; /* Metal Mania is naturally bold/heavy */
   text-transform: uppercase;
-  letter-spacing: -0.5px;
+  letter-spacing: 2px;
+  
+  /* Thrasher Style: Black Text (Outline), White Fill */
+  color: white; /* Fill */
+  -webkit-text-stroke: 1px var(--color-primary-red); /* Neon Green Outline */
+  text-shadow: 0 0 15px rgba(57, 255, 20, 0.3); /* Distinct Glow */
 }
 
+/* Override punchline to use standard font for contrast or keep it? 
+   User said "leave rest of descriptions... same". Punchline is closer to a header. */
 .punchline {
-  color: var(--color-primary-red);
+  font-family: 'Metal Mania', cursive;
+  color: var(--color-primary-red); /* Keep solid neon for punchlines */
+  -webkit-text-stroke: 0;
   text-transform: uppercase;
-  font-weight: 900;
-  font-size: 12px;
+  font-weight: 400;
+  font-size: 14px;
   letter-spacing: 4px;
   margin-bottom: 10px;
   display: block;
@@ -94,6 +115,9 @@ h1, h2, h3, h4, h5, h6 {
     transparent 100%
   );
   -webkit-mask: 
+     linear-gradient(#fff 0 0) content-box, 
+     linear-gradient(#fff 0 0);
+  mask: 
      linear-gradient(#fff 0 0) content-box, 
      linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -499,6 +523,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-gradient-animated {
   background: linear-gradient(90deg, var(--color-primary-red), var(--color-gold), var(--color-primary-red));
   background-size: 200% auto;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textGradient 3s linear infinite;
@@ -612,4 +637,3 @@ h1, h2, h3, h4, h5, h6 {
 .active-indicator:hover::after {
   width: 100%;
 }
-

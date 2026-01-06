@@ -88,7 +88,7 @@ Also, make sure you're cleaning/oiling the filter every 10-15k miles for optimal
     const isMobile = windowWidth <= 850;
 
     return (
-        <div style={{ background: 'var(--color-bg-deep)', color: 'white', minHeight: '100vh' }}>
+        <div style={{ background: 'transparent', color: 'white', minHeight: '100vh' }}>
             <div className="container" style={{ padding: '40px 1.5rem 100px' }}>
                 {/* Breadcrumb */}
                 <div className="flex gap-2 items-center" style={{ fontSize: '13px', color: '#666', marginBottom: '40px' }}>
@@ -115,10 +115,9 @@ Also, make sure you're cleaning/oiling the filter every 10-15k miles for optimal
                 {/* Posts */}
                 <div className="flex flex-col gap-8" style={{ marginBottom: '60px' }}>
                     {posts.map((post) => (
-                        <div key={post.id} style={{ 
+                        <div key={post.id} className="glass-card" style={{ 
                             display: 'grid', 
                             gridTemplateColumns: isMobile ? '1fr' : '220px 1fr', 
-                            background: 'rgba(255,255,255,0.01)', 
                             border: `1px solid ${post.isMod ? 'rgba(255, 60, 60, 0.2)' : post.isOP ? 'rgba(252, 207, 49, 0.2)' : 'rgba(255,255,255,0.05)'}`, 
                             borderRadius: '24px', 
                             overflow: 'hidden',
@@ -212,7 +211,7 @@ Also, make sure you're cleaning/oiling the filter every 10-15k miles for optimal
                 </div>
 
                 {/* Reply Form */}
-                <div className="glass" style={{ padding: isMobile ? '30px' : '50px', borderRadius: '32px', background: 'rgba(252, 207, 49, 0.02)', border: '1px solid rgba(252, 207, 49, 0.1)' }}>
+                <div className="glass-card" style={{ padding: isMobile ? '30px' : '50px', background: 'rgba(252, 207, 49, 0.02)', border: '1px solid rgba(252, 207, 49, 0.1)' }}>
                     <div className="flex items-center gap-4 mb-24" style={{ marginBottom: '24px' }}>
                          <div style={{ padding: '10px', background: 'var(--color-gold)', borderRadius: '10px' }}>
                               <MessageSquare size={20} color="black" />

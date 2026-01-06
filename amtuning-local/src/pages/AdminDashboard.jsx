@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     LayoutDashboard, Users, ShoppingCart, TrendingUp, Search, 
     ArrowDownRight, ExternalLink, ShieldAlert, BarChart3, 
     Activity, Package, DollarSign
 } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import AutomationPanel from '../components/admin/AutomationPanel';
+
 
 const AdminDashboard = () => {
     const { currentUser, isAuthenticated } = useAuth();
@@ -62,6 +65,7 @@ const AdminDashboard = () => {
 
                 <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <TabButton active={activeTab === 'overview'} onClick={() => setActiveTab('overview')} icon={<LayoutDashboard size={18} />} label="Overview" />
+                    <TabButton active={activeTab === 'automation'} onClick={() => setActiveTab('automation')} icon={<Activity size={18} />} label="Automation" />
                     <TabButton active={activeTab === 'dropship'} onClick={() => setActiveTab('dropship')} icon={<ShoppingCart size={18} />} label="DropShip Tool" />
                     <TabButton active={activeTab === 'intel'} onClick={() => setActiveTab('intel')} icon={<BarChart3 size={18} />} label="Live Intel" />
                 </nav>
@@ -104,7 +108,7 @@ const AdminDashboard = () => {
                                 <h2 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '1.5rem' }}>RECENT OPERATIONS (SALES)</h2>
                                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                                     <thead>
-                                        <tr style={{ textAlign: 'left', color: '#555', fontSize: '0.8rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                        <tr style={{ textAlign: 'left', color: '#dd1cb3ff', fontSize: '0.8rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                             <th style={{ padding: '1rem' }}>OPERATIVE</th>
                                             <th style={{ padding: '1rem' }}>STATION</th>
                                             <th style={{ padding: '1rem' }}>AMOUNT</th>
@@ -118,6 +122,17 @@ const AdminDashboard = () => {
                                     </tbody>
                                 </table>
                             </div>
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'automation' && (
+                        <motion.div 
+                            key="automation"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                        >
+                            <AutomationPanel />
                         </motion.div>
                     )}
 
@@ -147,7 +162,7 @@ const AdminDashboard = () => {
                                     <motion.div animate={{ rotate: 360 }} transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}>
                                         <Search size={48} color="var(--color-gold)" />
                                     </motion.div>
-                                    <p style={{ marginTop: '1rem', color: '#888' }}>Accessing Global Manufacturing Databases...</p>
+                                    <p style={{ marginTop: '1rem', color: '#28ffb7ff' }}>Accessing Global Manufacturing Databases...</p>
                                 </div>
                             )}
 
@@ -164,7 +179,7 @@ const AdminDashboard = () => {
                                         >
                                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
                                                 <h4 style={{ fontWeight: '800', color: 'var(--color-gold)' }}>{source.name}</h4>
-                                                <ArrowDownRight size={20} color="#4caf50" />
+                                                <ArrowDownRight size={20} color="#50ff55ff" />
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}><span style={{ color: '#666' }}>Supply Price:</span> <strong>{source.price}</strong></div>

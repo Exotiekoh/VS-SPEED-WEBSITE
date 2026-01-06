@@ -1,18 +1,21 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTheme } from '../../contexts/ThemeContext';
 
-// Floating Particles System - Google Antigravity Style
-const Particles = () => {
+// Floating Particles System - Dynamic Color Theme
+const Particles = ({ themeColors }) => {
     const particlesRef = useRef();
     const [mousePos, setMousePos] = useState(new THREE.Vector2(0, 0));
-    const particleCount = 2000; // Signficantly increased for high performance workload
+    const particleCount = 2000;
 
-    const particles = useMemo(() => {
+    // Use useState lazy initializer to generate random values only once at mount
+    const [particles] = useState(() => {
         const positions = new Float32Array(particleCount * 3);
         const velocities = [];
         const colors = new Float32Array(particleCount * 3);
 
+        // Generate all random values at initialization time
         for (let i = 0; i < particleCount; i++) {
             positions[i * 3] = (Math.random() - 0.5) * 40;
             positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
@@ -24,20 +27,17 @@ const Particles = () => {
                 z: (Math.random() - 0.5) * 0.01
             });
 
-            const useGold = Math.random() > 0.7;
-            if (useGold) {
-                colors[i * 3] = 1.0;
-                colors[i * 3 + 1] = 0.84;
-                colors[i * 3 + 2] = 0.0;
-            } else {
-                colors[i * 3] = 0.8 + Math.random() * 0.2;
-                colors[i * 3 + 1] = 0.1 + Math.random() * 0.2;
-                colors[i * 3 + 2] = 0.1;
-            }
+            // Use theme colors for particles
+            const colorIndex = Math.floor(Math.random() * themeColors.length);
+            const themeColor = themeColors[colorIndex];
+            const hexColor = new THREE.Color(themeColor);
+            colors[i * 3] = hexColor.r;
+            colors[i * 3 + 1] = hexColor.g;
+            colors[i * 3 + 2] = hexColor.b;
         }
 
         return { positions, velocities, colors };
-    }, []);
+    });
 
     useFrame((state) => {
         const positions = particlesRef.current.geometry.attributes.position.array;
@@ -107,10 +107,12 @@ const Particles = () => {
     );
 };
 
-// Floating Geometric Shapes
-const FloatingShapes = () => {
-    const shapes = useMemo(() => {
-        return Array.from({ length: 8 }, (_, i) => ({
+// Floating Geometric Shapes with Theme  
+const FloatingShapes = ({ themeColors }) => {
+    // Use useState lazy initializer to generate random values only once at mount
+    const [shapes] = useState(() => {
+        // Generate all random values at initialization time
+        return Array.from({ length: 8 }, () => ({
             position: [
                 (Math.random() - 0.5) * 20,
                 (Math.random() - 0.5) * 15,
@@ -119,20 +121,21 @@ const FloatingShapes = () => {
             rotation: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
             scale: 0.3 + Math.random() * 0.7,
             rotationSpeed: [(Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01],
-            type: Math.floor(Math.random() * 3) // 0: box, 1: sphere, 2: octahedron
+            type: Math.floor(Math.random() * 3),
+            colorIndex: Math.floor(Math.random() * themeColors.length)
         }));
-    }, []);
+    });
 
     return (
         <>
             {shapes.map((shape, i) => (
-                <FloatingShape key={i} {...shape} />
+                <FloatingShape key={i} {...shape} themeColor={themeColors[shape.colorIndex]} />
             ))}
         </>
     );
 };
 
-const FloatingShape = ({ position, rotation, scale, rotationSpeed, type }) => {
+const FloatingShape = ({ position, rotation, scale, rotationSpeed, type, themeColor }) => {
     const meshRef = useRef();
 
     useFrame((state) => {
@@ -156,26 +159,26 @@ const FloatingShape = ({ position, rotation, scale, rotationSpeed, type }) => {
         <mesh ref={meshRef} position={position} rotation={rotation} scale={scale}>
             {geometry}
             <meshStandardMaterial
-                color={type === 1 ? '#fccf31' : '#ff3c3c'}
+                color={themeColor}
                 wireframe={true}
                 transparent
                 opacity={0.2}
-                emissive={type === 1 ? '#fccf31' : '#ff3c3c'}
+                emissive={themeColor}
                 emissiveIntensity={0.3}
             />
         </mesh>
     );
 };
 
-// Enhanced Wave Field with more dynamic motion
-const WaveField = () => {
+// Enhanced Wave Field with dynamic theme colors
+const WaveField = ({ waveColor1, waveColor2 }) => {
     const meshRef = useRef();
 
     const shaderArgs = useMemo(() => ({
         uniforms: {
             uTime: { value: 0 },
-            uColorLow: { value: new THREE.Color('#ff2222') },
-            uColorHigh: { value: new THREE.Color('#ffcc00') }
+            uColorLow: { value: new THREE.Vector3(...waveColor1) },
+            uColorHigh: { value: new THREE.Vector3(...waveColor2) }
         },
         vertexShader: `
             uniform float uTime;
@@ -213,7 +216,7 @@ const WaveField = () => {
                 gl_FragColor = vec4(color, alpha);
             }
         `
-    }), []);
+    }), [waveColor1, waveColor2]);
 
     useFrame((state) => {
         const { clock } = state;
@@ -232,10 +235,76 @@ const WaveField = () => {
     );
 };
 
+// Rotating Background Images Component
+const RotatingBackgroundImages = () => {
+    const backgroundImages = [
+        '/images/backgrounds/vsspeed-studio-m4.jpg',
+        '/images/backgrounds/vsspeed-sunset-m4.jpg',
+        '/images/backgrounds/vsspeed-track-m3.jpg',
+        '/images/backgrounds/vsspeed-carbon-parts.jpg',
+        '/images/backgrounds/vsspeed-worldwide-delivery.jpg'
+    ];
+    
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [nextIndex, setNextIndex] = useState(1);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIsTransitioning(true);
+            
+            setTimeout(() => {
+                setCurrentIndex((prev) => (prev + 1) % backgroundImages.length);
+                setNextIndex((prev) => (prev + 1) % backgroundImages.length);
+                setIsTransitioning(false);
+            }, 1500); // 1.5s transition duration
+        }, 30000); // 30 seconds
+
+        return () => clearInterval(interval);
+    }, [backgroundImages.length]);
+
+    return (
+        <>
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${backgroundImages[currentIndex]})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    opacity: isTransitioning ? 0 : 0.3,
+                    transition: 'opacity 1.5s ease-in-out',
+                    filter: 'brightness(0.5) contrast(1.2)',
+                    zIndex: 1
+                }}
+            />
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${backgroundImages[nextIndex]})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    opacity: isTransitioning ? 0.3 : 0,
+                    transition: 'opacity 1.5s ease-in-out',
+                    filter: 'brightness(0.5) contrast(1.2)',
+                    zIndex: 1
+                }}
+            />
+        </>
+    );
+};
+
 const Background3D = () => {
+    const { currentTheme } = useTheme();
+
+    if (!currentTheme) return null;
+
     return (
         <div style={{
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
             width: '100%',
@@ -244,15 +313,16 @@ const Background3D = () => {
             pointerEvents: 'none',
             opacity: 0.7
         }}>
-            <Canvas camera={{ position: [0, 3, 12], fov: 50 }}>
-                <color attach="background" args={['#08080c']} />
+            <RotatingBackgroundImages />
+            <Canvas camera={{ position: [0, 3, 12], fov: 50 }} style={{ position: 'relative', zIndex: 2 }}>
+                <color attach="background" args={['rgba(8, 8, 12, 0.2)']} />
                 <ambientLight intensity={0.6} />
-                <pointLight position={[10, 10, 10]} intensity={1.2} color="#fccf31" />
-                <pointLight position={[-10, -10, -10]} intensity={0.8} color="#ff3c3c" />
+                <pointLight position={[10, 10, 10]} intensity={1.2} color={currentTheme.secondary} />
+                <pointLight position={[-10, -10, -10]} intensity={0.8} color={currentTheme.primary} />
                 
-                <WaveField />
-                <Particles />
-                <FloatingShapes />
+                <WaveField waveColor1={currentTheme.waveColor1} waveColor2={currentTheme.waveColor2} />
+                <Particles themeColors={currentTheme.particleColors} />
+                <FloatingShapes themeColors={currentTheme.particleColors} />
             </Canvas>
         </div>
     );

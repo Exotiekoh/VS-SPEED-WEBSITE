@@ -33,7 +33,7 @@ const Forum = () => {
     ];
 
     return (
-        <div style={{ background: 'var(--color-bg-deep)', color: 'white', minHeight: '100vh' }}>
+        <div style={{ background: 'transparent', color: 'white', minHeight: '100vh' }}>
             <div className="container" style={{ padding: '60px 1.5rem 100px' }}>
                 {/* Breadcrumb */}
                 <div className="flex gap-2 items-center" style={{ fontSize: '13px', color: '#666', marginBottom: '40px' }}>
@@ -45,11 +45,9 @@ const Forum = () => {
                 </div>
 
                 {/* Forum Header */}
-                <div className="glass" style={{ 
+                <div className="glass-card" style={{ 
                     marginBottom: '50px', 
                     padding: '40px', 
-                    borderRadius: '24px', 
-                    border: '1px solid rgba(255,255,255,0.05)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '40px',
@@ -85,7 +83,7 @@ const Forum = () => {
                 </div>
 
                 {/* Thread List Container */}
-                <div className="glass" style={{ border: '1px solid rgba(255,215,0,0.1)', borderRadius: '24px', overflow: 'hidden', backgroundColor: 'rgba(0,0,0,0.2)' }}>
+                <div className="glass-card" style={{ overflow: 'hidden' }}>
                     {/* List Header */}
                     <div style={{ 
                         display: 'grid', 

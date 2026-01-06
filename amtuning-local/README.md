@@ -1,16 +1,74 @@
-# React + Vite
+# 🚀 VS SPEED - Quick Launch Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## **FASTEST START** (One-Time Setup)
 
-Currently, two official plugins are available:
+### Step 1: Configure Domain (Run Once)
+1. **Right-click** `CONFIGURE_DOMAIN.bat`
+2. Select **"Run as administrator"**
+3. Click "Yes" when prompted
+4. Wait for success message
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Step 2: Launch Website
+**Double-click** `LAUNCH_VSSPEED.bat`
 
-## React Compiler
+✅ That's it! Website opens at: **http://www.vsspeed.io:5173**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🔐 Admin Access
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **URL**: http://www.vsspeed.io:5173/admin-login
+- **Username**: `335IZJEMZ`
+- **Password**: `123456`
+
+---
+
+## 📁 Important Files
+
+| File | Purpose |
+|------|---------|
+| `CONFIGURE_DOMAIN.bat` | One-time domain setup (run as admin) |
+| `LAUNCH_VSSPEED.bat` | **Main launcher** - double-click to start |
+| `QUICK_START.md` | Detailed automation guide |
+| `SETUP_CHECKLIST.md` | Complete setup documentation |
+
+---
+
+## 🛠️ Manual Commands
+
+```powershell
+npm install          # Install dependencies (first time)
+npm run dev          # Start dev server manually
+npm run build        # Build for production
+npm run sync         # Sync products from suppliers
+```
+
+---
+
+## ❓ Troubleshooting
+
+**Site won't load at www.vsspeed.io?**
+- Run `CONFIGURE_DOMAIN.bat` as Administrator
+- Restart your browser
+
+**Port already in use?**
+```powershell
+netstat -ano | findstr :5173
+taskkill /PID [number] /F
+```
+
+**Need to reset everything?**
+```powershell
+rmdir /s /q node_modules
+npm install
+```
+
+---
+
+## 📞 Support
+
+**Email**: vsspeedhq@gmail.com
+
+---
+
+**VS SPEED** | Powered by www.vsspeed.io 🔥

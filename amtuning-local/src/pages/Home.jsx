@@ -1,25 +1,40 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Shield, Globe, Info, ShoppingBag } from 'lucide-react';
-import { motion } from 'framer-motion';
+
 import Hero from '../components/layout/Hero';
 import ProductCard from '../components/products/ProductCard';
 import NewsletterSection from '../components/marketing/NewsletterSection';
+import VIPModal from '../components/VIPModal';
 import { useCart } from '../contexts/CartContext';
+import { useVIP } from '../contexts/VIPContext';
 import { products } from '../data/productDatabase';
 
 const Home = () => {
     const { addToCart } = useCart();
+    const { showVIPModal, setShowVIPModal, vipData } = useVIP();
     
     // Randomize featured products on each page load
-    const [featuredProducts, setFeaturedProducts] = useState([]);
-
-    useEffect(() => {
-        // Shuffle and select 8 random products excluding Ferrari (401, 402)
+    const [featuredProducts] = useState(() => {
         const availableProducts = products.filter(p => p.id !== 401 && p.id !== 402);
         const shuffled = [...availableProducts].sort(() => Math.random() - 0.5);
-        setFeaturedProducts(shuffled.slice(0, 8));
-    }, []);
+        return shuffled.slice(0, 8);
+    });
+
+    // Show VIP modal on first visit after delay
+    useEffect(() => {
+        const hasSeenVIPModal = localStorage.getItem('vss_seen_vip_modal');
+        if (!hasSeenVIPModal && !vipData.isVIP && !vipData.trialUsed) {
+            const timer = setTimeout(() => {
+                setShowVIPModal(true);
+                localStorage.setItem('vss_seen_vip_modal', 'true');
+            }, 2000); // Show after 2 seconds
+            
+            return () => clearTimeout(timer);
+        }
+    }, [vipData.isVIP, vipData.trialUsed, setShowVIPModal]);
 
     // Get Ferrari products for the special section
     const ferrari488 = products.find(p => p.id === 401);
@@ -40,7 +55,8 @@ const Home = () => {
     };
 
     return (
-        <div style={{ background: 'var(--color-bg-deep)', color: 'white' }}>
+        <div style={{ background: 'transparent', color: 'white' }}>
+            <VIPModal isOpen={showVIPModal} onClose={() => setShowVIPModal(false)} />
             <Hero />
 
             {/* Featured Products Section */}
@@ -72,36 +88,16 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Special Deals Section */}
+            {/* Special Deals Section - Ferrari */}
             <section style={{ padding: '80px 0', background: 'linear-gradient(180deg, rgba(210, 41, 49, 0.05) 0%, transparent 100%)' }}>
                 <div className="container">
                     <div className="text-center" style={{ marginBottom: '60px' }}>
-                        <motion.div
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            whileInView={{ scale: 1, opacity: 1 }}
-                            viewport={{ once: true }}
-                            style={{
-                                display: 'inline-block',
-                                background: 'linear-gradient(135deg, #FF2800 0%, #8B0000 100%)',
-                                padding: '10px 30px',
-                                borderRadius: '30px',
-                                marginBottom: '20px',
-                                boxShadow: '0 8px 24px rgba(255, 40, 0, 0.3)'
-                            }}
-                        >
-                            <span style={{ color: '#fff', fontWeight: '900', fontSize: '12px', letterSpacing: '3px' }}>
-                                🏎️ EXOTIC PERFORMANCE
-                            </span>
-                        </motion.div>
                         <h2 style={{ fontSize: '3.5rem', fontWeight: '900', marginBottom: '12px' }}>
-                            FERRARI <span className="text-red">CARBON</span> SERIES
+                            FERRARI <span className="text-red">SERIES</span>
                         </h2>
-                        <p style={{ color: '#888', fontSize: '1.2rem', maxWidth: '700px', margin: '0 auto' }}>
-                            Ultra-premium dry carbon fibre transformations for the world's most elite supercar platforms.
-                        </p>
                     </div>
-
-                    <div style={{ 
+                    {/* ... existing Ferrari content ... */}
+                     <div style={{ 
                         display: 'grid', 
                         gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', 
                         gap: '30px' 
@@ -188,61 +184,125 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* JDM & German Performance Banner */}
-            <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 100%)' }}>
-                <div className="container text-center">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        style={{ 
-                            fontSize: '2.5rem', 
-                            fontWeight: '900',
-                            marginBottom: '20px'
-                        }}
+             {/* NEW: Carbon Fiber Feature Section */}
+            <section style={{ position: 'relative', height: '600px', display: 'flex', alignItems: 'center', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', inset: 0 }}>
+                    <img 
+                        src="/images/feature-carbon-parts.jpg" 
+                        alt="Carbon Fiber Parts" 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, #000 0%, rgba(0,0,0,0.6) 50%, transparent 100%)' }}></div>
+                </div>
+                <div className="container" style={{ position: 'relative', zIndex: 10 }}>
+                    <motion.div 
+                        initial={{ x: -50, opacity: 0 }}
+                        whileInView={{ x: 0, opacity: 1 }}
+                        transition={{ duration: 0.8 }}
+                        style={{ maxWidth: '600px' }}
                     >
-                        <span style={{ color: 'var(--color-gold)' }}>JDM</span> & <span style={{ color: 'var(--color-primary-red)' }}>GERMAN</span> PERFORMANCE
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        style={{ color: 'var(--color-text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}
-                    >
-                        Premium parts for Nissan, Toyota, Subaru, Honda, BMW, Mercedes, Audi, Porsche and more.
-                    </motion.p>
+                        <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: '900', lineHeight: 1.1, marginBottom: '20px' }}>
+                            PRECISION <br/>
+                            <span className="text-red">CARBON</span>
+                        </h2>
+                        <p style={{ fontSize: '1.2rem', color: '#ccc', marginBottom: '30px', maxWidth: '450px' }}>
+                            Lightweight. Aerodynamic. Race-proven. Elevate your build with our premium carbon fiber aesthetic kits.
+                        </p>
+                        <Link to="/products?category=exterior">
+                            <button className="cool-outline" style={{ padding: '15px 40px', background: 'transparent', border: '2px solid var(--color-primary-red)', color: 'white', fontWeight: 'bold', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                                Shop Carbon
+                            </button>
+                        </Link>
+                    </motion.div>
                 </div>
             </section>
 
-            {/* Unique VSSPEED Value Strip */}
-            <section style={{ padding: '80px 0' }}>
+            {/* NEW: Garage Feature Section */}
+             <section style={{ padding: '0', position: 'relative', background: '#000' }}>
+                <div className="container" style={{ padding: '100px 20px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
+                        
+                        <div style={{ 
+                            display: 'grid', 
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
+                            gap: '40px',
+                            alignItems: 'center'
+                        }}>
+                             <motion.div 
+                                initial={{ opacity: 0, x: -30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                            >
+                                <span className="text-gold" style={{ fontWeight: 'bold', letterSpacing: '2px', fontSize: '0.9rem' }}>VIRTUAL GARAGE</span>
+                                <h2 style={{ fontSize: '3rem', fontWeight: '900', margin: '15px 0' }}>BUILD YOUR <span className="text-red">DREAM</span></h2>
+                                <p style={{ color: '#888', marginBottom: '30px', lineHeight: '1.6' }}>
+                                    Step into our virtual studio. Visualize your perfect spec with our 3D configuration tools and premium parts catalog before you buy.
+                                </p>
+                                <Link to="/garage">
+                                    <button style={{ padding: '15px 35px', background: 'var(--color-gold)', color: 'black', fontWeight: '900', borderRadius: '4px', border: 'none' }}>
+                                        ENTER GARAGE
+                                    </button>
+                                </Link>
+                            </motion.div>
+                            
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                style={{ borderRadius: '20px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}
+                            >
+                                <img src="/images/garage-m4-studio.jpg" alt="Virtual Garage" style={{ width: '100%', display: 'block' }} />
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            {/* NEW: Worldwide Delivery Banner */}
+            <section style={{ padding: '40px 0' }}>
                 <div className="container">
-                    <div className="glass" style={{ padding: '60px', borderRadius: 'var(--border-radius-lg)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '40px' }}>
-                        <div className="text-center">
-                            <Globe className="text-red mx-auto" size={40} style={{ marginBottom: '20px' }} />
-                            <h4 style={{ marginBottom: '10px' }}>Global Speed</h4>
-                            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>Worldwide sourcing for rare performance components.</p>
-                        </div>
-                        <div className="text-center">
-                            <Shield className="text-red mx-auto" size={40} style={{ marginBottom: '20px' }} />
-                            <h4 style={{ marginBottom: '10px' }}>Pro Verified</h4>
-                            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>Every part tested for racing-grade reliability.</p>
-                        </div>
-                        <div className="text-center">
-                            <Zap className="text-red mx-auto" size={40} style={{ marginBottom: '20px' }} />
-                            <h4 style={{ marginBottom: '10px' }}>Instant Power</h4>
-                            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>Software and hardware tunes that deliver today.</p>
-                        </div>
+                    <div style={{
+                        borderRadius: '20px',
+                        overflow: 'hidden',
+                        position: 'relative',
+                        height: '400px',
+                    }}>
+                        <img 
+                            src="/images/feature-worldwide-delivery.jpg" 
+                            alt="Worldwide Delivery" 
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                         <div style={{ 
+                             position: 'absolute', 
+                             inset: 0, 
+                             background: 'linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.2))',
+                             display: 'flex',
+                             flexDirection: 'column',
+                             justifyContent: 'center',
+                             padding: '60px'
+                         }}>
+                             <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                whileInView={{ y: 0, opacity: 1 }}
+                                viewport={{ once: true }}
+                             >
+                                <Globe size={48} className="text-gold mb-4" />
+                                <h2 style={{ fontSize: '3rem', fontWeight: '900', lineHeight: '1' }}>GLOBAL <br/> LOGISTICS</h2>
+                                <p style={{ fontSize: '1.2rem', maxWidth: '500px', marginTop: '20px', color: '#ddd' }}>
+                                    Fast, insured shipping to over 200 countries. We handle the customs, you handle the driving.
+                                </p>
+                             </motion.div>
+                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Newsletter Signup */}
             <NewsletterSection />
-
         </div>
     );
 };
+
 
 export default Home;

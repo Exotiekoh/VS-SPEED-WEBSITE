@@ -61,7 +61,7 @@ const PartHunter = () => {
     };
 
     return (
-        <div style={{ padding: '60px 0 120px', minHeight: '100vh', background: 'var(--color-bg-deep)', color: 'var(--color-text-main)' }}>
+        <div style={{ padding: '60px 0 120px', minHeight: '100vh', background: 'transparent', color: 'var(--color-text-main)' }}>
             <div className="container">
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                     
@@ -163,12 +163,10 @@ const PartHunter = () => {
                     </AnimatePresence>
 
                     {/* Search Interface */}
-                    <div className="glass" style={{ 
+                    <div className="glass-card" style={{ 
                         padding: 'clamp(20px, 5vw, 50px)', 
-                        borderRadius: '32px', 
                         position: 'relative',
-                        overflow: 'hidden',
-                        background: 'rgba(255,255,255,0.01)'
+                        overflow: 'hidden'
                     }}>
                         {/* Scanning Effect Overlay */}
                         {isHunting && (
@@ -298,17 +296,15 @@ const PartHunter = () => {
                                         whileHover={{ y: -8, scale: 1.02 }}
                                         style={{ textDecoration: 'none' }}
                                     >
-                                        <div className="glass glass-hover" style={{ 
+                                        <div className="glass-card glass-hover" style={{ 
                                             padding: '40px', 
-                                            borderRadius: '24px', 
                                             height: '100%',
                                             display: 'flex',
-                                            flexDirection: 'column',
-                                            backgroundColor: 'rgba(255,255,255,0.01)'
+                                            flexDirection: 'column'
                                         }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '25px' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                                                    <div style={{ padding: '15px', background: 'rgba(255,255,255,0.03)', borderRadius: '14px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                                    <div className="glass-card" style={{ padding: '15px', borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                         {res.icon}
                                                     </div>
                                                     <h3 style={{ fontSize: '1.6rem', fontWeight: '900', color: 'white' }}>{res.platform}</h3>

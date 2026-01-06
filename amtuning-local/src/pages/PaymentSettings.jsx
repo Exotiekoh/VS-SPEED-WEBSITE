@@ -24,7 +24,7 @@ const PaymentSettings = () => {
     const isMobile = windowWidth <= 850;
 
     return (
-        <div style={{ background: 'var(--color-bg-deep)', minHeight: '100vh', color: 'white' }}>
+        <div style={{ background: 'transparent', minHeight: '100vh', color: 'white' }}>
             <div className="container" style={{ padding: isMobile ? '40px 1.5rem 80px' : '80px 1.5rem 100px', maxWidth: '900px' }}>
                 {/* Breadcrumb */}
                 <div className="flex gap-2 items-center" style={{ fontSize: '12px', color: '#666', marginBottom: '30px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px' }}>
