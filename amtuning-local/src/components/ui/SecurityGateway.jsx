@@ -77,13 +77,13 @@ const SecurityGateway = ({ children }) => {
             zIndex: 9999
         }}>
             <div style={{ width: '300px', textAlign: 'center' }}>
-                <motion.div 
+                <Motion.div 
                     animate={{ rotate: 360 }}
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     style={{ display: 'inline-block', marginBottom: '30px' }}
                 >
                     <ScanLine size={48} color="var(--color-gold)" />
-                </motion.div>
+                </Motion.div>
 
                 <h2 style={{ fontSize: '1.2rem', fontWeight: '900', letterSpacing: '2px', marginBottom: '20px' }}>
                     SYSTEM SECURITY SCAN
@@ -98,7 +98,7 @@ const SecurityGateway = ({ children }) => {
                     marginBottom: '20px',
                     overflow: 'hidden'
                 }}>
-                    <motion.div 
+                    <Motion.div 
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                         style={{ height: '100%', background: 'var(--color-primary-red)' }}
@@ -116,14 +116,14 @@ const SecurityGateway = ({ children }) => {
                 }}>
                     <AnimatePresence>
                         {logs.slice(-4).map((log, i) => (
-                            <motion.div 
+                            <Motion.div 
                                 key={i}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 style={{ marginBottom: '4px' }}
                             >
                                 {`> ${log}`}
-                            </motion.div>
+                            </Motion.div>
                         ))}
                     </AnimatePresence>
                 </div>
