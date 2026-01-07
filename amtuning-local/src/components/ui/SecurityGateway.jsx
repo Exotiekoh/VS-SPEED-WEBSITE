@@ -119,7 +119,7 @@ const SecurityGateway = ({ children }) => {
                             <Motion.div 
                                 key={i}
                                 initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 6, x: 0 }}
+                                animate={{ opacity: 1, x: 0 }}
                                 style={{ marginBottom: '4px' }}
                             >
                                 {`> ${log}`}
