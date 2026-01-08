@@ -3,7 +3,7 @@ import { Search, ShoppingBag, User, Menu, X, Zap, Globe } from 'lucide-react';
 import logo from '../../assets/vsspeed-logo-transparent.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line no-unused-vars
-import { useCart } from '../../contexts/CartContext';
+import { useCart } from '../../contexts/useCart';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);

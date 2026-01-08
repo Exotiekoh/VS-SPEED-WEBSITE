@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Minus, Plus, ShoppingBag, ChevronRight, CheckCircle, ArrowRight } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
+import { useCart } from '../contexts/useCart';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Cart = () => {

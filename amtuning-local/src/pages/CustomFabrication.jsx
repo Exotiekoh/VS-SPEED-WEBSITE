@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Hammer, Ruler, Zap, ShieldCheck, ChevronRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { products } from '../data/productDatabase';
@@ -221,7 +220,7 @@ const CustomFabrication = () => {
 
                 {/* Featured Panels */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: isMobile ? '40px' : '80px' }}>
-                    {customParts.map((part, index) => (
+                    {customParts.map((part) => (
                         <motion.div
                             key={part.id}
                             initial={{ opacity: 0, scale: 0.98 }}

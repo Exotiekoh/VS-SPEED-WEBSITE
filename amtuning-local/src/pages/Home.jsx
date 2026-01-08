@@ -8,7 +8,7 @@ import Hero from '../components/layout/Hero';
 import ProductCard from '../components/products/ProductCard';
 import NewsletterSection from '../components/marketing/NewsletterSection';
 import VIPModal from '../components/VIPModal';
-import { useCart } from '../contexts/CartContext';
+import { useCart } from '../contexts/useCart';
 import { useVIP } from '../contexts/VIPContext';
 import { products } from '../data/productDatabase';
 

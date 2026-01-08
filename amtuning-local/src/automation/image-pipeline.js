@@ -1,8 +1,6 @@
 // VSSPEED GLOBAL - Image Download & Optimization Pipeline
 // This module downloads product images from suppliers and optimizes them
 
-import { supplierConfig } from './automation-config.js';
-import * as fs from 'fs';
 import * as path from 'path';
 
 /**
@@ -114,7 +112,7 @@ export const generateImageVariants = async (imagePath) => {
     
     const variants = {};
     
-    for (const [size, width] of Object.entries(sizes)) {
+    for (const [size] of Object.entries(sizes)) {
         // Mock variant generation
         variants[size] = imagePath.replace('.jpg', `-${size}.jpg`);
     }
@@ -142,13 +140,9 @@ const getImageExtension = (url) => {
 /**
  * Validate image exists and is accessible
  */
-export const validateImage = async (imageUrl) => {
-    try {
-        // In production, make HEAD request to check image
-        return true;
-    } catch {
-        return false;
-    }
+export const validateImage = async () => {
+    // In production, make HEAD request to check image
+    return true;
 };
 
 export default {

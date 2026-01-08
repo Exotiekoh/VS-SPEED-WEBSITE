@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { ShoppingBag, Zap, Eye, Heart, CheckCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../../contexts/CartContext';
+import { useCart } from '../../contexts/useCart';
 import { useToast } from '../../contexts/ToastContext';
 
 const ProductCard = ({ product }) => {

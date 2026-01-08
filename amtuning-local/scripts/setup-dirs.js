@@ -1,6 +1,5 @@
 // Create public/images/products directory if it doesn't exist
 import { mkdir } from 'fs/promises';
-import { join } from 'path';
 
 const createDirectories = async () => {
     const dirs = [
@@ -13,7 +12,7 @@ const createDirectories = async () => {
         try {
             await mkdir(dir, { recursive: true });
             console.log(`✅ Created directory: ${dir}`);
-        } catch (error) {
+        } catch {
             console.log(`ℹ️  Directory exists: ${dir}`);
         }
     }

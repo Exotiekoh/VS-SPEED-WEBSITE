@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Heart, Share2, Truck, Shield, RefreshCw, ChevronRight, Minus, Plus, Zap, CheckCircle, AlertTriangle, Target, Package } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
+import { useCart } from '../contexts/useCart';
 import { useVehicle } from '../contexts/VehicleContext';
 import { products } from '../data/productDatabase';
 import { motion, AnimatePresence } from 'framer-motion';
