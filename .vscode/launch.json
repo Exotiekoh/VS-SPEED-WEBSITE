@@ -1,0 +1,28 @@
+{
+    "configurations": [ 
+        chrome
+        name: "vsspeed.io"
+http://localhost:5173
+        name: "http://localhost:5173"
+
+        http://localhost:5173
+        name: "http://localhost:5173"
+        launch.json 
+        {
+            "name": "http://localhost:5173",
+            "port": 5173,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+            " netstat": findstr :5173
+        },
+   {"configurations": [
+        name: "http://vsspeed.io"
+        launch.json 
+        {
+            "name": "http://vsspeed.io",
+            "port": 5173,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+            " netstat": findstr :5173 },
