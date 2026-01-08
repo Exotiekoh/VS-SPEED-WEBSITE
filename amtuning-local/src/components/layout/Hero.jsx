@@ -1,50 +1,75 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'; // eslint-disable-line no-unused-vars
 import { Truck, CreditCard, MapPin, Shield, Zap } from 'lucide-react';
 
-const Hero = () => {
-    // Video background enabled - no state needed for static carousel currently
+// Import showcase images
+import bmwGarage from '../../assets/homepage_bmw_garage.jpg';
+import bmwSunset from '../../assets/homepage_bmw_sunset.jpg';
+import bmwTrack from '../../assets/homepage_bmw_track.jpg';
+import audiR8 from '../../assets/homepage_audi_r8.jpg';
+import bmwBlackGarage from '../../assets/homepage_bmw_black_garage.jpg';
+import carbonFiber from '../../assets/homepage_carbon_fiber.jpg';
+import jdmGarageBMW from '../../assets/jdm-garage-bmw.jpg';
 
+const Hero = () => {
+    // Rotating background images - changes every 20 seconds
+    const backgroundImages = [
+        bmwGarage,
+        bmwSunset, 
+        bmwTrack,
+        audiR8,
+        bmwBlackGarage,
+        carbonFiber,
+        jdmGarageBMW
+    ];
+
+    // Initialize with random image
+    const [currentImageIndex, setCurrentImageIndex] = useState(() => 
+        Math.floor(Math.random() * 7)
+    );
+
+    useEffect(() => {
+        // Auto-rotate every 20 seconds
+        const interval = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => 
+                (prevIndex + 1) % backgroundImages.length
+            );
+        }, 20000); // 20 seconds
+
+        return () => clearInterval(interval);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <section className="hero-section" style={{ position: 'relative', overflow: 'hidden', minHeight: '85vh', display: 'flex', alignItems: 'center', background: 'transparent' }}>
-            {/* Background Video - YouTube Embed */}
+            {/* Rotating Background Images */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
-                <div style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    width: '300%', // Massive width to ensure coverage
-                    height: '300%', // Massive height to ensure coverage
-                    transform: 'translate(-50%, -50%)',
-                    pointerEvents: 'none' // Prevent interaction
-                }}>
-                    <iframe
-                        src="https://www.youtube.com/embed/wLd3dfix2B8?autoplay=1&mute=1&controls=0&loop=1&playlist=wLd3dfix2B8&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1"
+                {backgroundImages.map((image, index) => (
+                    <div
+                        key={index}
                         style={{
-                            width: '100%',
-                            height: '100%',
-                            border: 'none'
+                            position: 'absolute',
+                            inset: 0,
+                            backgroundImage: `url(${image})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundRepeat: 'no-repeat',
+                            opacity: currentImageIndex === index ? 1 : 0,
+                            transition: 'opacity 2s ease-in-out',
+                            pointerEvents: 'none'
                         }}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        title="Hero Background Video"
                     />
-                </div>
+                ))}
                 
                 {/* Gradient Overlay for Text Readability */}
                 <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.9) 100%)',
+                    background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.9) 100%)',
                     zIndex: 1,
                     pointerEvents: 'none'
                 }} />
             </div>
-
-            {/* GPU Intensive 3D Background - Now Global in App.jsx */}
-            {/* The 3D background will sit on top of this via App.jsx's z-index or blended if needed */}
 
             <div className="container" style={{ position: 'relative', zIndex: 10 }}>
                 <div className="flex flex-col items-center text-center">

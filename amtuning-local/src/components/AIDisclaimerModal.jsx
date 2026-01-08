@@ -124,7 +124,7 @@ const AIDisclaimerModal = ({ isOpen, onAccept, onDecline }) => {
                             <p>
                                 <strong style={{ color: 'white' }}>6. No Guarantee:</strong> Results may vary. We make no guarantees regarding power gains, reliability, or performance outcomes.
                             </p>
-                        </div>
+                        </div>sn
                     </div>
 
                     {/* Checkbox Agreement */}

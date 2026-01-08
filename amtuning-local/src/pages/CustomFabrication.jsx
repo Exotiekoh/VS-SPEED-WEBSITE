@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Hammer, Ruler, Zap, ShieldCheck, ChevronRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { products } from '../data/productDatabase';
-import yellowCarImage from '../assets/popup_yellow_golf.jpg';
+import widebodyShowcase from '../assets/widebody_brz_drift.jpg';
 
 const CustomFabrication = () => {
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -171,8 +172,8 @@ const CustomFabrication = () => {
                     }}
                 >
                     <img 
-                        src={yellowCarImage}
-                        alt="VS SPEED Custom Build - Yellow Golf"
+                        src={widebodyShowcase}
+                        alt="VS SPEED Custom Widebody Build - BRZ Drift"
                         style={{
                             width: '100%',
                             height: isMobile ? '350px' : '500px',
