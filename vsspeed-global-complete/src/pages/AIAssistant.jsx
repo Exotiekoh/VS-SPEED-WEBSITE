@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Send, Bot, User, Sparkles, Car, Wrench, DollarSign, HelpCircle, ShieldCheck, Zap, Radio, Target, Info } from 'lucide-react';
+import { ChevronRight, Send, Bot, User, Sparkles, Car, Wrench, DollarSign, HelpCircle, ShieldCheck, Zap, Radio, Target, Info, AlertCircle } from 'lucide-react';
 import { useVehicle } from '../contexts/VehicleContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { callGeminiAI, AI_CONSULTANT_SYSTEM_PROMPT } from '../services/geminiAI';
+import { buildAIContext } from '../services/aiContextBuilder';
 
 const AIAssistant = () => {
     const { vehicle } = useVehicle();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [aiError, setAiError] = useState(null);
     
     useEffect(() => {
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -14,19 +17,25 @@ const AIAssistant = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    const getInitialMessage = () => {
+        return `🛰️ **SIGNAL SECURE.** Welcome to VSSPEED Mission Intelligence, powered by **Gemini 3 Flash**.
+
+${vehicle.make ? `Telemetry received for your **${vehicle.year} ${vehicle.make} ${vehicle.model}**.` : "Awaiting vehicle telemetry connection."}
+
+I am initialized to provide tactical support for:
+• **Strategic Procurement** - Precision part recommendations from our catalog
+• **Operational Implementation** - Technical installation guidance  
+• **Performance Optimization** - Stage 1/2/3 tuning intelligence
+• **Custom Tuning** - $29.99 ECU calibration with 2 free revisions
+
+How shall we proceed with your ${vehicle.make || 'project'}?`;
+    };
+
     const [messages, setMessages] = useState([
         {
             role: 'assistant',
             id: 'init',
-            content: `SIGNAL SECURE. Welcome to VSSPEED Mission Intelligence. ${vehicle.make ? `Telemetry received for your **${vehicle.year} ${vehicle.make} ${vehicle.model}**. ` : "Awaiting vehicle telemetry connection. "}
-
-I am initialized to provide tactical support for:
-• **Strategic Procurement** - Precision part recommendations
-• **Operational Implementation** - Technical installation guidance
-• **Performance Optimization** - Stage 1/2/3 tuning intelligence
-• **Logistics Coordination** - Real-time order telemetry
-
-How shall we proceed with your ${vehicle.make || 'project'}?`
+            content: getInitialMessage()
         }
     ]);
     const [inputValue, setInputValue] = useState('');
@@ -48,122 +57,44 @@ How shall we proceed with your ${vehicle.make || 'project'}?`
         { icon: <Target size={16} />, text: 'Track active shipment' }
     ];
 
-    const getAIResponse = (userMessage) => {
-        const lowerMsg = userMessage.toLowerCase();
-        const vMake = (vehicle.make || '').toLowerCase();
-        const vModel = (vehicle.model || '').toLowerCase();
-
-        // 1. Optimization / Mods logic based on Vehicle
-        if (lowerMsg.includes('optimize') || lowerMsg.includes('mod') || lowerMsg.includes('upgrade') || lowerMsg.includes('stage')) {
-            if (vMake === 'audi' || vMake === 'volkswagen') {
-                return `ANALYZING MQB PLATFORM DEPLOYMENT...
-                
-For your ${vehicle.make} ${vehicle.model}, I recommend the Phase 1 "Urban Predator" configuration:
-
-**1. Primary Intake:** VSS High-Flow Cold Air System (+12HP)
-**2. Management:** Stage 1 ECU Refinement (VSS-Spec)
-**3. Power Retention:** Dogbone Mount Upgrade (Eliminates wheel hop)
-
-**Total Estimated HP Gain:** +45-65 WHP
-**Operational Cost:** ~$1,250.00 CAD
-
-Should I add these components to your procurement list?`;
-            } else if (vMake === 'bmw') {
-                return `ANALYZING BAVARIAN POWER DEPLOYMENT...
-                
-For your ${vehicle.make} ${vehicle.model}, we recommend the "B-Series Dominator" path:
-
-**1. Airflow:** Charge Pipe Upgrade (Mandatory for reliability)
-**2. Thermal Management:** VSS Performance Intercooler
-**3. Calibration:** Stage 2 Bootmod3 / MHD Transmission
-
-**Telemetry Projection:** +80-100 WHP over stock.
-**Strategic Note:** Recommending Index 12 injectors if tracking N54 platform.
-
-Initiate catalog search for these identifiers?`;
-            } else if (vMake === 'ferrari') {
-                return `ANALYZING EXOTIC TELEMETRY... 🏎️
-                
-For your Ferrari ${vehicle.model}, we focus on aerodynamic efficiency and acoustic range:
-
-**1. Aero:** VSS Dry Carbon Diffuser & Front Lip (+15% Downforce)
-**2. Exhaust:** Valvetronic X-Pipe Deployment
-**3. Software:** ECU Mapping for decat-response
-
-**Strategic Disclaimer:** Exotic series procurement requires specialist installation.
-
-Generate a custom body-kit visualization for your chassis?`;
-            } else {
-                return `ANALYZING GENERIC PERFORMANCE DATA...
-                
-As your vehicle telemetry is limited, I recommend starting with the "VSS Core Three":
-1. High-Flow Air Filtration
-2. Stage 1 ECU Software Mapping
-3. Performance Brake Fluid/Pads (Safety First)
-
-Connect your vehicle in the Garage for chassis-specific Stage 2/3 benchmarks.`;
-            }
-        }
-
-        // 2. Installation Logic
-        if (lowerMsg.includes('intake') || lowerMsg.includes('install') || lowerMsg.includes('how to')) {
-            return `PROTOCOL: COMPONENT IMPLEMENTATION (AIR INTAKE)
-
-**Required Toolset:**
-• 10mm Drive Socket
-• Precision Flathead Driver
-• T25 Torx Driver (Standard for ${vMake === 'bmw' || vMake === 'audi' ? 'German' : 'Global'} exports)
-
-**Operational Sequence:**
-1. Secure negative battery terminal
-2. Decouple OEM airbox assembly
-3. Transfer MAF sensor to VSS high-flow housing
-4. Secure VSS assembly to chassis mounts
-5. Finalize signal connections
-
-💡 **INTEL:** Synchronize ECU by allowing 300 seconds of idle time post-install.
-
-Do you require the specific torque settings for these mounting points?`;
-        }
-
-        // 3. Shipping / Tracking
-        if (lowerMsg.includes('order') || lowerMsg.includes('track') || lowerMsg.includes('shipment')) {
-            return `COORDINATING LOGISTICS TELEMETRY... 📦
-
-To retrieve real-time status, transmit your Order ID (Format: VSS-XXXXX).
-
-**CURRENT TRANSIT WINDOWS:**
-• Domestic (Canada): 2-5 Business Days
-• Continental (US): 5-10 Business Days
-• Global: 7-21 Business Days
-
-**Note:** Exotic body kits (Ferrari/Porsche) ship via dedicated freight for maximum security.`;
-        }
-
-        return `INPUT RECEIVED. ${vehicle.make ? `Processing data for ${vehicle.make} sector...` : "Scanning general databases..."}
-
-I am standing by to assist with:
-• Technical schematics and part selection
-• Installation troubleshooting
-• Performance scaling intelligence
-• Order stream status
-
-Transmit your query for analysis.`;
-    };
-
-    const handleSend = () => {
+    const handleSend = async () => {
         if (!inputValue.trim()) return;
 
         const userMessage = inputValue.trim();
         setMessages(prev => [...prev, { role: 'user', id: Date.now(), content: userMessage }]);
         setInputValue('');
         setIsTyping(true);
+        setAiError(null);
 
-        setTimeout(() => {
-            const response = getAIResponse(userMessage);
-            setMessages(prev => [...prev, { role: 'assistant', id: Date.now() + 1, content: response }]);
+        try {
+            // Build context from vehicle and product database
+            const context = buildAIContext(vehicle, []);
+            
+            // Format messages for API (exclude initial welcome message for cleaner context)
+            const apiMessages = messages
+                .filter(m => m.id !== 'init')
+                .concat([{ role: 'user', content: userMessage }])
+                .map(m => ({ role: m.role, content: m.content }));
+
+            // Call Gemini 3 Flash API
+            const response = await callGeminiAI(apiMessages, AI_CONSULTANT_SYSTEM_PROMPT, context);
+            
+            setMessages(prev => [...prev, { 
+                role: 'assistant', 
+                id: Date.now() + 1, 
+                content: response 
+            }]);
+        } catch (error) {
+            console.error('AI Error:', error);
+            setAiError('Connection issue - using backup intelligence');
+            setMessages(prev => [...prev, { 
+                role: 'assistant', 
+                id: Date.now() + 1, 
+                content: `⚠️ **Temporary Signal Disruption**\n\nI'm experiencing a brief connection issue. Please try again, or contact support at vsspeedhq@gmail.com for immediate assistance.\n\n_Error: ${error.message}_` 
+            }]);
+        } finally {
             setIsTyping(false);
-        }, 1200);
+        }
     };
 
     const handleQuickQuestion = (question) => {
