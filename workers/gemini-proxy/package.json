@@ -1,0 +1,11 @@
+{
+  "name": "vsspeed-gemini-proxy",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "devDependencies": {
+    "wrangler": "^3.102.0",
+    "typescript": "^5.6.3"
+  }
+}
+

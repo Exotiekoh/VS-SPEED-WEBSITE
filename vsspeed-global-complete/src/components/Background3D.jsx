@@ -1,45 +1,61 @@
 import React, { useRef, useMemo, useState, useEffect } from 'react';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+
+// Deterministic pseudo-random generator (pure across renders)
+// https://stackoverflow.com/a/47593316 (mulberry32)
+function mulberry32(seed) {
+    let a = seed >>> 0;
+    return function rand() {
+        a |= 0;
+        a = (a + 0x6D2B79F5) | 0;
+        let t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+}
 
 // Floating Particles System - Google Antigravity Style
 const Particles = () => {
     const particlesRef = useRef();
-    const [mousePos, setMousePos] = useState(new THREE.Vector2(0, 0));
+    const [mousePos, setMousePos] = useState(() => new THREE.Vector2(0, 0));
     const particleCount = 2000; // Signficantly increased for high performance workload
 
+    // Pure/deterministic generation (no Math.random in render)
     const particles = useMemo(() => {
+        const rand = mulberry32(0x5A17C0DE); // deterministic seed
         const positions = new Float32Array(particleCount * 3);
         const velocities = [];
         const colors = new Float32Array(particleCount * 3);
 
         for (let i = 0; i < particleCount; i++) {
-            positions[i * 3] = (Math.random() - 0.5) * 40;
-            positions[i * 3 + 1] = (Math.random() - 0.5) * 30;
-            positions[i * 3 + 2] = (Math.random() - 0.5) * 30;
+            positions[i * 3] = (rand() - 0.5) * 40;
+            positions[i * 3 + 1] = (rand() - 0.5) * 30;
+            positions[i * 3 + 2] = (rand() - 0.5) * 30;
 
             velocities.push({
-                x: (Math.random() - 0.5) * 0.015,
-                y: (Math.random() - 0.5) * 0.015,
-                z: (Math.random() - 0.5) * 0.01
+                x: (rand() - 0.5) * 0.015,
+                y: (rand() - 0.5) * 0.015,
+                z: (rand() - 0.5) * 0.01
             });
 
-            const useGold = Math.random() > 0.7;
+            const useGold = rand() > 0.7;
             if (useGold) {
                 colors[i * 3] = 1.0;
                 colors[i * 3 + 1] = 0.84;
                 colors[i * 3 + 2] = 0.0;
             } else {
-                colors[i * 3] = 0.8 + Math.random() * 0.2;
-                colors[i * 3 + 1] = 0.1 + Math.random() * 0.2;
+                colors[i * 3] = 0.8 + rand() * 0.2;
+                colors[i * 3 + 1] = 0.1 + rand() * 0.2;
                 colors[i * 3 + 2] = 0.1;
             }
         }
 
         return { positions, velocities, colors };
-    }, []);
+    }, [particleCount]);
 
     useFrame((state) => {
+        if (!particlesRef.current) return;
         const positions = particlesRef.current.geometry.attributes.position.array;
         const time = state.clock.getElapsedTime();
 
@@ -55,8 +71,10 @@ const Particles = () => {
             
             if (distance < 8) {
                 const force = (8 - distance) * 0.02;
-                positions[i * 3] += (dx / distance) * force;
-                positions[i * 3 + 1] += (dy / distance) * force;
+                // Avoid division by zero
+                const safeDistance = distance || 0.0001;
+                positions[i * 3] += (dx / safeDistance) * force;
+                positions[i * 3 + 1] += (dy / safeDistance) * force;
             }
 
             if (positions[i * 3] > 20) positions[i * 3] = -20;
@@ -110,16 +128,17 @@ const Particles = () => {
 // Floating Geometric Shapes
 const FloatingShapes = () => {
     const shapes = useMemo(() => {
-        return Array.from({ length: 8 }, (_, i) => ({
+        const rand = mulberry32(0x00F10A7); // deterministic seed
+        return Array.from({ length: 8 }, () => ({
             position: [
-                (Math.random() - 0.5) * 20,
-                (Math.random() - 0.5) * 15,
-                (Math.random() - 0.5) * 10
+                (rand() - 0.5) * 20,
+                (rand() - 0.5) * 15,
+                (rand() - 0.5) * 10
             ],
-            rotation: [Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI],
-            scale: 0.3 + Math.random() * 0.7,
-            rotationSpeed: [(Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01, (Math.random() - 0.5) * 0.01],
-            type: Math.floor(Math.random() * 3) // 0: box, 1: sphere, 2: octahedron
+            rotation: [rand() * Math.PI, rand() * Math.PI, rand() * Math.PI],
+            scale: 0.3 + rand() * 0.7,
+            rotationSpeed: [(rand() - 0.5) * 0.01, (rand() - 0.5) * 0.01, (rand() - 0.5) * 0.01],
+            type: Math.floor(rand() * 3) // 0: box, 1: sphere, 2: octahedron
         }));
     }, []);
 
@@ -217,6 +236,7 @@ const WaveField = () => {
 
     useFrame((state) => {
         const { clock } = state;
+        if (!meshRef.current) return;
         meshRef.current.material.uniforms.uTime.value = clock.getElapsedTime();
     });
 

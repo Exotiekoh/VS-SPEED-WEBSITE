@@ -4,12 +4,23 @@
  * https://ai.google.dev/gemini-api/docs/quickstart
  */
 
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+/**
+ * IMPORTANT:
+ * - Do NOT call Gemini directly from GitHub Pages with an API key baked into the bundle.
+ * - Instead, call a server-side proxy that holds the key (e.g. Cloudflare Worker).
+ *
+ * Configure:
+ * - VITE_GEMINI_PROXY_URL=https://<your-worker>.workers.dev
+ * Optional (local/dev only):
+ * - VITE_GEMINI_API_KEY=<key> (unsafe for production)
+ */
 
-// Gemini 3 Flash - Google's most balanced model for speed, scale, and frontier intelligence
-// Model: gemini-3-flash-preview | Input: 1M tokens | Output: 65K tokens
+const GEMINI_PROXY_URL = import.meta.env.VITE_GEMINI_PROXY_URL;
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY; // dev-only fallback
+
+// Gemini 3 Flash Preview model code
 const GEMINI_MODEL = 'gemini-3-flash-preview';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
+const DIRECT_GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
 /**
  * Call Gemini 3 Flash AI with conversation history and context
@@ -19,9 +30,19 @@ const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/
  * @returns {Promise<string>} - AI response text
  */
 export async function callGeminiAI(messages, systemPrompt, context = null) {
-  // If no API key is configured, return mock mode message
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === 'your_gemini_api_key_here') {
-    return getMockResponse(messages[messages.length - 1]?.content || '');
+  // Prefer proxy in prod; allow direct key usage only for local/dev.
+  const hasProxy = Boolean(GEMINI_PROXY_URL);
+  const hasDevKey = Boolean(GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here');
+
+  if (!hasProxy && !hasDevKey) {
+    return [
+      '⚠️ **AI is not configured yet**',
+      '',
+      'This site is hosted on GitHub Pages, so the Gemini API key cannot be safely embedded in the frontend.',
+      '',
+      '**Fix:** deploy the included Cloudflare Worker proxy and set `VITE_GEMINI_PROXY_URL` during the build.',
+      'Then redeploy the site so the browser can call the proxy.',
+    ].join('\n');
   }
 
   try {
@@ -71,7 +92,12 @@ export async function callGeminiAI(messages, systemPrompt, context = null) {
       }
     };
 
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    // Use proxy if configured; otherwise fall back to direct Gemini calls (DEV ONLY).
+    const endpoint = hasProxy
+      ? `${GEMINI_PROXY_URL.replace(/\/$/, '')}/generateContent?model=${encodeURIComponent(GEMINI_MODEL)}`
+      : `${DIRECT_GEMINI_API_URL}?key=${GEMINI_API_KEY}`;
+
+    const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
