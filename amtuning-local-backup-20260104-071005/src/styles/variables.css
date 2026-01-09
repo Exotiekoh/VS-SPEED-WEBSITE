@@ -1,0 +1,46 @@
+:root {
+  /* VS SPEED - Unique High Performance Aesthetic */
+  --color-primary-red: #ff0000;
+  --color-primary-red-glow: rgba(255, 0, 0, 0.6);
+  --gradient-red: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+
+  /* VS SPEED GOLD - Premium Accents */
+  --color-gold: #fccf31;
+  --color-gold-deep: #f5af19;
+  --gradient-gold: linear-gradient(135deg, #fccf31 0%, #f5af19 100%);
+  --text-shadow-gold: 0 0 2px rgba(0, 0, 0, 0.8), 0 0 1px rgba(0, 0, 0, 0.5);
+
+  /* ANIMATED OUTLINE SHARP - Gold, White, Black */
+  --gradient-outline: conic-gradient(from 0deg, #fccf31, #ffffff, #000000, #fccf31);
+
+  /* Deep Performance Dark Mode */
+  --color-bg-deep: #050505;
+  --color-bg-card: #0a0a0c;
+  --color-bg-glass: rgba(10, 10, 12, 0.85);
+
+  --color-border-glass: rgba(255, 255, 255, 0.1);
+  --color-border-gold: rgba(252, 207, 49, 0.6);
+  --color-border-red: rgba(255, 0, 0, 0.6);
+  --color-border-glow: rgba(255, 0, 0, 0.4);
+
+  --color-text-main: #f0f0f5; /* Brightened Platinum */
+  --color-text-body: #d1d1d6; /* Brightened Silver */
+  --color-text-muted: #a1a1aa;
+  --color-text-dim: #71717a;
+
+  /* Typography - Impactful & Modern */
+  --font-family-body: 'Rubik', system-ui, -apple-system, sans-serif;
+  --font-family-header: 'Rubik', sans-serif;
+
+  /* Layout & Glassmorphism */
+  --layout-max-width: 1400px;
+  --glass-blur: 12px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 24px;
+
+  /* Performance Constants */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}

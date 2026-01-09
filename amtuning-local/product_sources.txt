@@ -1,0 +1,199 @@
+VSSPEED GLOBAL - PRODUCT SOURCE MASTER LIST ===========================================
+
+[FERRARI & EXOTIC]
+1. VS SPEED Ferrari 488 Full Carbon Fibre M-Style Body Kit
+   - Source: Internal / VS SPEED Exclusive
+   - Cover Image: Local Asset (ferrari488Carbon)
+
+2. VS SPEED Ferrari 812 Superfast MS-Style Carbon Transformation
+   - Source: Internal / VS SPEED Exclusive
+   - Cover Image: Local Asset (ferrari812Carbon)
+
+[BODY KITS]
+3. VRS-Style Wide Body Kit Carbon Fiber - Toyota GT86 / Subaru BRZ
+   - Source: Internal Inventory
+   - Cover Image: Local Path (uploaded_image_1767388181803.png)
+
+4. BMW E9X Widebody Kit (Concept)
+   - Source: Internal Concept
+   - Cover Image: Local Asset (e9xWidebody)
+
+[FUEL PUMPS]
+5. E9X / E8X In-Tank Fuel Filter & Regulator (V2)
+   - Source: Internal Inventory
+   - Cover Image: Local Asset (lpfpE9x)
+
+6. DeatschWerks DW420 420lph In-Tank Fuel Pump BMW E36/E46
+   - Source: DeatschWerks
+   - Cover Image: https://deatschwerks.com/cdn/shop/files/DW-Web-01.png?v=1738698611&width=600
+
+7. DeatschWerks DW430C 430LPH Compact Fuel Pump VW Golf
+   - Source: DeatschWerks
+   - Cover Image: https://deatschwerks.com/cdn/shop/articles/DW430c_In_Tank_Pump_016f90c4-4dab-4724-9a4e-caa4f3bd4a41.png?v=1746806196&width=1100
+
+8. Radium Engineering BMW E46 Fuel Pump Hanger
+   - Source: Radium Engineering
+   - Cover Image: https://www.radiumauto.com/cdn/shop/files/20-1180_E461x1.jpg?v=1748988348&width=1000
+
+9. CTS MK4 Inline Fuel Pump Kit
+   - Source: CTS Turbo
+   - Cover Image: https://ctsturbo.com/wp-content/uploads/2018/11/cts-fpk-001-1-1.jpg
+
+10. AMS Performance Omega Fuel System R35 GT-R
+    - Source: AMS Performance
+    - Cover Image: https://cdn.vividracing.com/file/vr23/449/1/alp.07.07.0010-2_1.webp?w=1024
+
+11. Autotech OEM Fuel Pump Assembly MK6 TSI 2.0T
+    - Source: Autotech
+    - Cover Image: https://www.amtuning.ca/cdn/shop/products/m198644494_1024x1024.jpg?v=1680282688
+
+[IGNITION]
+12. APR Ignition Coil Pack - Red/Grey/Blue
+    - Source: APR
+    - Cover Image: https://www.amtuning.ca/cdn/shop/products/ms100192_001_1797x.jpg?v=1680263372
+
+13. DINAN Ignition Coil N-Series
+    - Source: Dinan
+    - Cover Image: https://images.dinancars.com/1024x/3d29bb5cf93284b69ad19950cf3f7f767737ba1d.jpg
+
+[VRSF CATALOG - SOURCED]
+14. VRSF Catted Downpipes X3M/X4M
+    - Source: https://www.vr-speed.com/
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2021/01/VRSF-10972011-321x218.jpg
+
+15. VRSF Racing Downpipes X3M/X4M
+    - Source: https://www.vr-speed.com/
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2021/01/VRSF-10972010-321x218.jpg
+
+16. VRSF 1000whp 7.5" Stepped Race Intercooler
+    - Source: https://www.vr-speed.com/product/vrsf-7-5-stepped-race-intercooler-fmic-upgrade-kit-07-12-135i-335i-n54-n55-e82-e90-e92
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2016/08/VRSF-10903050-wpp1600376491148-321x218.jpg
+
+17. VRSF Dual Cone Intake (DCI)
+    - Source: https://www.vr-speed.com/product/vrsf-performance-intake-kit-07-13-bmw-n54-e88-e90-e92-e60
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2014/05/vrsf-n54-dci-2_1-1400x918.jpg
+
+18. VRSF 3.5" Street Stainless Steel Catback Exhaust
+    - Source: https://www.vr-speed.com/product/vrsf-3-5-street-stainless-steel-catback-exhaust-07-12-bmw-335i-335xi
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2014/11/VRSF-10902020.jpg
+
+19. VRSF B58 Downpipe Upgrade
+    - Source: https://www.vr-speed.com/product/vrsf-4-5-catless-downpipe-b58-2016-bmw-340i-440i-740i-xdrive
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2017/01/VRSF_10582010.jpg
+
+20. VRSF Chargepipe Upgrade Kit (N54/N55)
+    - Source: https://www.vr-speed.com/product/vrsf-chargepipe-upgrade-07-13-bmw-135i-335i-n54-n55
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2013/10/VRSF-10901020D_1-wpp1600377200365.jpg
+
+21. VRSF Ceramic Coated Downpipe Upgrade (N55)
+    - Source: https://www.vr-speed.com/shop
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2012/12/VRSF-10902015_5-wpp1600377520312.jpg
+
+22. VRSF Front Facing Air Intakes (S55)
+    - Source: https://www.vr-speed.com/product/vrsf-front-facing-air-intakes-2015-bmw-m3-m4-f80-f82-s55
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2017/09/VRSF-10801020.jpg
+
+23. VRSF Charge Pipe Upgrade Kit (S55)
+    - Source: https://www.vr-speed.com/product/vrsf-charge-pipe-upgrade-kit-15-18-bmw-m3-m4-f80-f82-f87-s55
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2016/08/VRSF-10801050_1-wpp1600377088223.jpg
+
+24. VRSF B48 B46 B58 Front Mount Intercooler Upgrade
+    - Source: https://www.vr-speed.com/shop
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2022/09/vrsf_10583010-scaled_2048x2048.webp
+
+25. VRSF 2.5" Lower Charge Pipe LCP
+    - Source: https://www.vr-speed.com/product/vrsf-2-5-lower-chargepipe-lcp-07-12-135i-335i-535i
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2018/03/vrsf-e90-lcp.jpg
+
+26. VRSF Aluminum Oil Catch Can
+    - Source: https://www.vr-speed.com/shop
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2019/02/VRSF-205420_3-wpp1600376998669.jpg
+
+27. VRSF Stainless Steel Muffler Delete
+    - Source: https://www.vr-speed.com/product/vrsf-stainless-steel-muffler-delete-for-07-13-bmw-335i-335xi-335is-e90-e91-e92-e93-n54-n55
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2018/10/vrsf-e90-n54-ex500-e1642445094222.jpg
+
+28. VRSF Catted Downpipes (S58)
+    - Source: https://www.vr-speed.com/shop
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2021/01/VRSF-10972011.jpg
+
+29. VRSF 90mm Stainless Steel Exhaust Tips
+    - Source: https://www.vr-speed.com/product/vrsf-90mm-stainless-steel-exhaust-tips-14-f80-f82-bmw-m3-m4
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2016/02/VRSF-10802060-wpp1600377211465.jpg
+
+30. VRSF Charge Pipe Upgrade Kit (B58)
+    - Source: VRSF / Internal
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2019/10/VRSF-10581030_1-wpp1600378261490-321x218.jpg
+
+31. VRSF 3.5" Turbo to Downpipe V-Band Exhaust Clamp
+    - Source: VRSF / Internal
+    - Cover Image: https://www.vr-speed.com/wp-content/uploads/2018/07/dp-clamp-100-e1607464095141-321x211.jpg
+
+[MISC PARTS]
+32. CTS Turbo HP Ignition Coil N54/N55
+    - Source: CTS Turbo
+    - Cover Image: https://ctsturbo.com/wp-content/uploads/2021/10/BMWCOIL-1.jpg
+
+33. DINAN Ignition Coil B-Series
+    - Source: Dinan
+    - Cover Image: https://www.amtuning.ca/cdn/shop/products/d650-0009_1_1800x.jpg?v=1680286834
+
+34. APR Iridium Pro Spark Plugs
+    - Source: APR
+    - Cover Image: https://www.amtuning.ca/cdn/shop/files/z1003100_001_5000x.jpg?v=1715368027
+
+35. CTS Bosch 60mm Fuel Pump Adapter
+    - Source: CTS Turbo
+    - Cover Image: https://www.amtuning.ca/cdn/shop/products/cts-hw-267-1_1080x.jpg?v=1680275739
+
+36. 034 Motorsport HPFP Tool
+    - Source: 034 Motorsport
+    - Cover Image: https://www.034motorsport.com/media/catalog/product/cache/0835cbe9791b54012685dcc62339b977/h/i/high-pressure-fuel-pump-tool-ea839-v6-engines-2-9t-3-0t-034-106-z068-1.jpg
+
+37. Radium 996 Pump Kit
+    - Source: Radium Engineering
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/573e80570bb367076f6c8a052191dd37L_1024x1024.jpg?v=1730234269
+
+38. Radium E36 Hanger
+    - Source: Radium Engineering
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/80974510f4617026dea9ffb4d2b1b8eaL_1024x1024.jpg?v=1755316332
+
+39. BM3 FlexFuel Kit
+    - Source: Bootmod3
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/IG-1_900x_b3f7fe28-bf3c-420b-859e-5228742a46b3_1024x1024.webp?v=1697139756
+
+40. Fuel-It! S58 Flex Fuel Kit
+    - Source: Fuel-It!
+    - Cover Image: http://www.amtuning.ca/cdn/shop/products/s58_fuel_it_1_1024x1024.jpg?v=1680284983
+
+41. Unitronic UniFLEX Kit
+    - Source: Unitronic
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/uniflexmqbea888evo4title2aweb_1024x1024.jpg?v=1715355930
+
+42. 034 Ethanol Content Gauge
+    - Source: 034 Motorsport
+    - Cover Image: http://www.amtuning.ca/cdn/shop/products/034-605-1017-1_1024x1024.jpg?v=1680276848
+
+43. RacingLine HP Ignition Coil
+    - Source: RacingLine
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/53089252135_41363b4164_k_1024x1024_2x_254df78b-d3be-4a78-8f10-fd5bcdf42e22_1024x1024.webp?v=1698863587
+
+44. VW/Audi OEM Coil
+    - Source: OEM
+    - Cover Image: https://precisionraceworks.com/cdn/shop/products/N54_Ignition_Kit_grande.jpg
+
+45. Bosch Pencil Coil
+    - Source: Bosch
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/2651ade2864581255bef8ad76d67a301_1024x1024.png?v=1719958798
+
+46. Unitronic DQ381.2 Unlocked TCU
+    - Source: Unitronic
+    - Cover Image: http://www.amtuning.ca/cdn/shop/files/blxxx301tcuphotoswebtitle2web_1024x1024.jpg?v=1748106543
+
+[CUSTOM FABRICATION]
+- Custom VS Speed Titanium Exhaust System
+  - Image: https://cdn.shopify.com/s/files/1/0273/1933/6983/products/Exhaust_1024x1024.jpg?v=1592476571
+- Hand-Built Turbo Manifold - N54/N55
+  - Image: https://performancebyrogers.com/cdn/shop/products/N54Manifold-1_1024x1024.jpg?v=1614742581
+- Custom Roll Cage / Aero Fabrication
+  - Image: https://www.chassisbuilt.com.au/cdn/shop/files/IMG_3962_600x600.jpg?v=1692244455
