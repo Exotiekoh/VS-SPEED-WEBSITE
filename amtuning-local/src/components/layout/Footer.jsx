@@ -81,7 +81,7 @@ const Footer = () => {
                             <li className="flex items-center gap-4">
                                 <Mail size={18} color="var(--color-primary-red)" />
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                    <a href="mailto:vsspeedsupport@gmail.com" style={{ color: 'var(--color-primary-red)' }}>vsspeedsupport@gmail.com</a>
+                                    <a href="mailto:vsspeedsupport@exotiekoh.github.io" style={{ color: 'var(--color-primary-red)' }}>vsspeedsupport@exotiekoh.github.io</a>
                                     <span style={{ fontSize: '11px', color: '#666' }}>Support inquiries</span>
                                 </div>
                             </li>

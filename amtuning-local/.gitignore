@@ -23,4 +23,60 @@ dist-ssr
 *.sln
 *.sw?
 
+# CRITICAL: Environment variables and secrets (NEVER COMMIT)
+.env
+.env.local
+.env.production
+.env.*.local
+*.env
+
+# Firebase sensitive files
+functions/.env
+functions/service-account-key.json
+.firebase/
+.firebaserc
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Encryption keys
+encryption-keys/
+secrets/
+
+# Transaction data backups
+backups/
+*.enc
+
+# Database exports
+firebase-export/
+firestore-export/
+
+# Functions node_modules
+functions/node_modules/
+
+# Build artifacts
+build/
+.cache/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Security audit logs
+security-logs/
+audit/
+
 *.zip

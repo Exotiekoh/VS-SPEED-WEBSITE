@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ==========================================
+    // ONLINE STORAGE COLLECTIONS
+    // ==========================================
+
+    // Cache metadata - read by anyone, write by authenticated users
+    match /cache_metadata/{cacheKey} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
+
+    // User cookies - only owner can access
+    match /user_cookies/{userId} {
+      allow read, write, delete: if isOwner(userId);
+    }
+
+    // User sessions - only owner can access
+    match /user_sessions/{sessionId} {
+      allow read, write: if isAuthenticated();
+      allow delete: if isAuthenticated();
+    }
+
+    // User preferences - only owner can access
+    match /user_preferences/{userId} {
+      allow read, write, delete: if isOwner(userId);
+    }
+
+    // User carts - only owner can access
+    match /user_carts/{userId} {
+      allow read, write, delete: if isOwner(userId);
+    }
+
+    // Browsing history - only owner can access
+    match /browsing_history/{userId} {
+      allow read, write, delete: if isOwner(userId);
+    }
+
+    // Temporary sessions (for non-logged-in users)
+    match /temp_sessions/{sessionId} {
+      allow read, write: if true;
+      allow delete: if true;
+    }
+
+    // ==========================================
+    // EXISTING COLLECTIONS
+    // ==========================================
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated();
+      allow update, delete: if isOwner(userId);
+    }
+
+    // Garages collection
+    match /garages/{garageId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated() && 
+                      request.resource.data.ownerId == request.auth.uid;
+      allow delete: if isAuthenticated() && 
+                       resource.data.ownerId == request.auth.uid;
+    }
+
+    // Transactions (encrypted) - no direct access
+    match /transactions/{transactionId} {
+      allow read: if false;
+      allow write: if false;
+    }
+
+    // Orders
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && 
+                     resource.data.userId == request.auth.uid;
+      allow create: if isAuthenticated();
+      allow update: if false; // Immutable after creation
+      allow delete: if false;
+    }
+
+    // Payment logs (audit trail)
+    match /payment_logs/{logId} {
+      allow read: if false; // Admin only via Cloud Functions
+      allow write: if false;
+    }
+
+    // Security logs
+    match /security_logs/{logId} {
+      allow read: if false; // Admin only
+      allow write: if false;
+    }
+
+    // Admin alerts
+    match /admin_alerts/{alertId} {
+      allow read: if isAuthenticated() && 
+                     request.auth.token.email == 'vsspeedhq@gmail.com';
+      allow write: if false; // Cloud Functions only
+    }
+
+    // Crypto payments
+    match /crypto_payments/{paymentId} {
+      allow read: if isAuthenticated() && 
+                     resource.data.userId == request.auth.uid;
+      allow write: if false; // Cloud Functions only
+    }
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

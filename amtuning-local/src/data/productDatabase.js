@@ -1104,6 +1104,37 @@ export const products = [
             'Flexible for tight spaces'
         ],
         fitment: ['Universal - Compact Routing']
+    },
+    // Cooling System Components
+    {
+        id: 220,
+        mfgPart: 'VSS-E9X-AUX-TANK',
+        title: 'VS SPEED Aluminum Alloy Auxiliary Coolant Tank - E90/E91/E92/E93',
+        price: '$249.99 USD',
+        image: 'https://s.alicdn.com/@sc04/kf/H0b66f59a8e1c4b0c9f0c2e8e3c8b2c0f3.jpg',
+        category: 'Cooling',
+        brand: 'VS SPEED',
+        description: 'Premium aluminum alloy auxiliary coolant expansion tank for BMW E90/E91/E92/E93 chassis. CNC-machined from 6061-T6 billet aluminum with anodized finish for superior durability and heat dissipation. Direct OEM replacement eliminates common plastic tank failures. Includes premium mounting hardware and installation guide. FREE GLOBAL SHIPPING with tracking included!',
+        features: [
+            '6061-T6 Billet Aluminum Construction',
+            'CNC-Machined with Anodized Finish',
+            'Superior Heat Dissipation vs Stock Plastic',
+            'Eliminates Common Plastic Tank Failures',
+            'Direct OEM Fitment - Bolt-On Installation',
+            'Includes All Mounting Hardware',
+            'Corrosion Resistant Design',
+            'Professional Installation Recommended',
+            'VS SPEED Quality Guarantee',
+            'FREE GLOBAL SHIPPING with Tracking',
+            'Shop.app Order Tracking Enabled'
+        ],
+        fitment: [
+            'BMW E90 (2006-2011)',
+            'BMW E91 (2006-2012)',
+            'BMW E92 (2007-2013)',
+            'BMW E93 (2007-2013)',
+            'BMW 325i/328i/330i/335i'
+        ]
     }
 ];
 

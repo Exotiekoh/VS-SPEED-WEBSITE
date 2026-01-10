@@ -1,42 +1,35 @@
 {
-  "name": "amtuning-local",
+  "name": "vsspeed-global",
+  "version": "2.0.0",
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
-    "serve": "node server.js",
-    "sync": "node scripts/sync-products.js full-sync",
-    "sync:products": "node scripts/sync-products.js products-only",
-    "sync:images": "node scripts/sync-products.js images-only",
-    "sync:test": "node scripts/sync-products.js test",
-    "deploy": "npm run build && npx gh-pages -d dist"
+    "deploy-prep": "node deploy-vsspeed.js",
+    "deploy": "npm run build && gh-pages -d dist",
+    "deploy-vsspeed": "node deploy-vsspeed.js && npm run deploy"
   },
   "dependencies": {
-    "@react-three/drei": "^10.7.7",
-    "@react-three/fiber": "^9.5.0",
-    "compression": "^1.7.4",
-    "express": "^4.18.2",
-    "framer-motion": "^12.23.26",
-    "lucide-react": "^0.562.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-router-dom": "^7.11.0",
-    "three": "^0.182.0"
+    "@octokit/rest": "^21.0.2",
+    "crypto-js": "^4.2.0",
+    "firebase": "^11.1.0",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "gh-pages": "^6.3.0",
-    "globals": "^16.5.0",
-    "vite": "^7.2.4"
+    "@types/applepayjs": "^14.0.8",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.18.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "gh-pages": "^6.2.0",
+    "vite": "^6.0.5"
   }
 }

@@ -34,13 +34,14 @@ import { VIPProvider } from './contexts/VIPContext';
 import SecurityGateway from './components/ui/SecurityGateway';
 
 // Placeholder components
-const Contact = () => <TextPage title="Contact Us" content="Support: vsspeedsupport@gmail.com | General Inquiries: vsspeedhq@gmail.com | Mississauga, ON, Canada" />;
+const Contact = () => <TextPage title="Contact Us" content="Support: vsspeedsupport@exotiekoh.github.io | General Inquiries: vsspeedhq@gmail.com | Mississauga, ON, Canada" />;
 
 import ShippingInfo from './pages/ShippingInfo';
 import Disclaimer from './pages/Disclaimer';
 import CustomFabrication from './pages/CustomFabrication';
 import AIMechanic from './pages/AIMechanic';
 import AIAssistant from './pages/AIAssistant';
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           <EmailPopup />
           <SalePopup />
           <FloatingAd />
+          <CookieConsent />
           <Header />
           <VehicleSelectorBar />
           <div style={{ flex: '1', width: '100%' }}>
