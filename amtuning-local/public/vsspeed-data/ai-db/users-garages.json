@@ -1,0 +1,38 @@
+{
+  "users": [
+    {
+      "user_id": "user_001",
+      "email": "demo@vsspeed.com",
+      "username": "vsspeed_demo",
+      "password_hash": "hashed_password_here",
+      "created_at": "2026-01-09T06:40:00-05:00",
+      "garage_ids": ["garage_001"]
+    }
+  ],
+  "garages": [
+    {
+      "garage_id": "garage_001",
+      "owner_user_id": "user_001",
+      "garage_name": "My Performance Garage",
+      "vehicles": [
+        {
+          "vehicle_id": "veh_001",
+          "year": 2015,
+          "make": "BMW",
+          "model": "M3",
+          "vin": "WBS3R9C59FK123456",
+          "mods": [
+            "Stage 2 Tune",
+            "Downpipes",
+            "Cold Air Intake"
+          ],
+          "notes": "Track-ready build"
+        }
+      ],
+      "created_at": "2026-01-09T06:40:00-05:00",
+      "last_updated": "2026-01-09T06:40:00-05:00"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "last_updated": "2026-01-09T06:40:00-05:00"
+}

@@ -1,0 +1,10 @@
+{
+  "hero_views": 0,
+  "vip_modal_opens": 0,
+  "vip_signups": 0,
+  "live_trending_clicks": 0,
+  "vehicle_selections": [],
+  "schema_version": "1.0.0",
+  "last_updated": "2026-01-06T21:30:30-05:00",
+  "description": "Homepage analytics and user interactions"
+}

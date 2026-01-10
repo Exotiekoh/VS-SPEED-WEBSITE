@@ -1,0 +1,22 @@
+{
+  "api_keys": {
+    "openai": "",
+    "stripe": "",
+    "paypal": "",
+    "shop_app": ""
+  },
+  "feature_flags": {
+    "ai_tuner_enabled": true,
+    "ai_mechanic_enabled": true,
+    "ai_consultant_enabled": true,
+    "auto_pricing_enabled": true,
+    "supplier_chat_enabled": true
+  },
+  "system_config": {
+    "mcp_server_url": "http://localhost:3001",
+    "website_url": "http://localhost:5175",
+    "shared_db_path": "C:\\Users\\burri\\OneDrive\\Desktop\\VSSPEED\\ai-shared-db"
+  },
+  "schema_version": "1.0.0",
+  "last_updated": "2026-01-06T21:02:44-05:00"
+}
