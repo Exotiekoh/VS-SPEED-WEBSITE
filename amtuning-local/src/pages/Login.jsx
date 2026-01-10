@@ -3,11 +3,19 @@ import { motion } from 'framer-motion';
 import { Lock, User, Key, ChevronRight, AlertTriangle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { 
+  signInWithGoogle, 
+  signInWithMicrosoft, 
+  signInWithGithub, 
+  signInWithApple 
+} from '../services/authProviders';
+import cookieManager from '../services/cookieManager';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [oauthLoading, setOauthLoading] = useState(null);
     const { login } = useAuth();
     const navigate = useNavigate();
 
@@ -18,11 +26,41 @@ const Login = () => {
         const result = login(username, password);
         
         if (result.success) {
-            navigate('/garage'); // Redirect to Garage on success
+            navigate('/garage');
         } else {
             setError(result.error);
         }
     };
+
+    const handleOAuthLogin = async (provider, loginFn) => {
+        setOauthLoading(provider);
+        setError('');
+
+        try {
+            const result = await loginFn();
+            
+            if (result.success) {
+                // Migrate temp data if exists
+                if (result.migrationData) {
+                    console.log('✅ Migrated temp data to account');
+                }
+                navigate('/garage');
+            } else {
+                setError(result.error || 'OAuth login failed');
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setOauthLoading(null);
+        }
+    };
+
+    const oauthProviders = [
+        { name: 'Google', color: '#4285F4', fn: signInWithGoogle },
+        { name: 'Microsoft', color: '#00A4EF', fn: signInWithMicrosoft },
+        { name: 'GitHub', color: '#333', fn: signInWithGithub },
+        { name: 'Apple', color: '#000', fn: signInWithApple }
+    ];
 
     return (
         <div style={{ 
@@ -89,6 +127,44 @@ const Login = () => {
                         {error}
                     </motion.div>
                 )}
+
+                {/* OAuth Providers */}
+                <div style={{ marginBottom: '24px' }}>
+                    <p style={{ textAlign: 'center', color: '#666', fontSize: '0.85rem', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                        Quick Sign In
+                    </p>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                        {oauthProviders.map(provider => (
+                            <motion.button
+                                key={provider.name}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => handleOAuthLogin(provider.name, provider.fn)}
+                                disabled={oauthLoading !== null}
+                                style={{
+                                    padding: '12px',
+                                    background: oauthLoading === provider.name ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.3)',
+                                    border: `1px solid ${provider.color}40`,
+                                    borderRadius: '10px',
+                                    color: 'white',
+                                    fontSize: '0.85rem',
+                                    fontWeight: '700',
+                                    cursor: oauthLoading ? 'not-allowed' : 'pointer',
+                                    opacity: oauthLoading && oauthLoading !== provider.name ? 0.5 : 1,
+                                    transition: 'all 0.3s'
+                                }}
+                            >
+                                {oauthLoading === provider.name ? '...' : provider.name}
+                            </motion.button>
+                        ))}
+                    </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', margin: '24px 0' }}>
+                    <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                    <span style={{ color: '#666', fontSize: '0.75rem', textTransform: 'uppercase' }}>Or</span>
+                    <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.1)' }} />
+                </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div style={{ position: 'relative' }}>
