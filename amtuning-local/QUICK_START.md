@@ -1,133 +1,201 @@
-# 🎯 VSSPEED AUTOMATION SYSTEM - QUICK REFERENCE CARD
+# VSSPEED.IO - Quick Start Guide
 
-## 🚀 Quick Launch
-**Double-click**: `LAUNCH_VSSPEED.bat` → Automatically opens at http://www.vsspeed.io:5173
+## 🚀 One-Click Setup (Recommended)
 
-## 🔐 Admin Access
-- **URL**: http://www.vsspeed.io:5173/admin-login
-- **Username**: `335IZJEMZ`
-- **Password**: `123456`
-
----
-
-## ⚡ Quick Actions
-
-### Start Website
+### **Option 1: PowerShell (Best)**
+1. Right-click **PowerShell** → Run as Administrator
+2. Run:
 ```powershell
-# Automatic launch (recommended)
-LAUNCH_VSSPEED.bat
-
-# Manual launch
-npm run dev
+cd "C:\Users\burri\OneDrive\Desktop\first_project_Jamie_hamza\amtuning-local"
+.\INSTALL_ALL.ps1
 ```
-→ Opens at: http://www.vsspeed.io:5173
 
-### Run Product Sync
-**Option 1 - Admin Dashboard** (Easy):
-1. Login → Click "Automation" tab
-2. Click "Sync Products" button
-3. Wait ~2 minutes
+### **Option 2: Batch File**
+1. Right-click **INSTALL_REQUIREMENTS.bat** → Run as Administrator
 
-**Option 2 - Terminal**:
+---
+
+## 📋 What Gets Installed
+
+| Software | Purpose | Size |
+|----------|---------|------|
+| **Chocolatey** | Package manager | ~10 MB |
+| **MySQL 8.0** | Database server | ~400 MB |
+| **Node.js** | JavaScript runtime | ~50 MB |
+| **npm packages** | Project dependencies | ~200 MB |
+
+**Total:** ~660 MB
+
+---
+
+## ⚙️ Manual Installation (If Automatic Fails)
+
+### 1. Install Chocolatey
 ```powershell
-npm run sync        # Full sync
-npm run sync:test "shop"  # Test (all products)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+[System.Net.ServicePointManager]::SecurityProtocol = 3072
+iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 ```
 
----
-
-## 💰 Pricing Settings
-
-**File**: `src/automation/automation-config.js`
-
-```javascript
-pricing: {
-    defaultMarkup: 0.25,  // 25% profit
-}
-```
-
-**Change markup**: Edit the number (0.30 = 30%)
-
----
-
-## 🔧 Enable/Disable Suppliers
-
-**Admin Dashboard**:
-- Automation tab → Click "Enable/Disable" buttons
-
-**Currently Enabled**:
-- ✅ ECS Tuning
-- ✅ Turner Motorsport  
-- ✅ FCP Euro
-- ✅ ModBargains
-
----
-
-## 📊 What Gets Synced
-
-- ✅ Product names & descriptions
-- ✅ Supplier prices (+ your markup)
-- ✅ Product images (downloaded locally)
-- ✅ Stock availability
-- ✅ Product categories
-
----
-
-## 🆘 Common Issues
-
-**Sync button does nothing?**
-- Open browser console (F12), check for errors
-- Reload page and try again
-
-**No products appear?**
-- Check terminal output for errors
-- Run `npm run sync:test` to see logs
-
-**Images missing?**
-- Images are generated as placeholders in test mode
-- For real images, need Puppeteer (advanced)
-
----
-
-## 📁 Important Files
-
-| File | Purpose |
-|------|---------|
-| `automation-config.js` | Settings & pricing |
-| `AutomationPanel.jsx` | Admin control panel |
-| `supplier-scraper.js` | Product scraping logic |
-| `AUTOMATION_GUIDE.md` | Full documentation |
-
----
-
-## 🚀 Commands Cheat Sheet
-
+### 2. Install MySQL
+**Option A - Chocolatey:**
 ```powershell
-npm run dev          # Start website
-npm run build        # Build for production
-npm run sync         # Full product sync
-npm run sync:test    # Test sync (5 products)
-npm run lint         # Check code quality
+choco install mysql -y
+```
+
+**Option B - Manual:**
+1. Download: https://dev.mysql.com/downloads/installer/
+2. Run installer
+3. Select "MySQL Server 8.0"
+4. Set root password (remember this!)
+5. Add to PATH
+
+### 3. Install Node.js
+```powershell
+choco install nodejs -y
+```
+
+Or download: https://nodejs.org/
+
+### 4. Install npm Packages
+```cmd
+cd "C:\Users\burri\OneDrive\Desktop\first_project_Jamie_hamza\amtuning-local"
+npm install
+```
+
+### 5. Setup Environment
+```cmd
+copy .env.example .env
+```
+
+Edit `.env` with:
+- MySQL password
+- Gmail app password
+- Firebase credentials
+
+---
+
+## 🗄️ Database Setup
+
+After system requirements are installed:
+
+```cmd
+SETUP_DATABASE.bat
+```
+
+Enter your MySQL root password when prompted.
+
+This creates:
+- `vsspeed_production` database
+- 14 tables
+- Sample data (BMW 335i)
+
+---
+
+## ✅ Verify Installation
+
+```cmd
+# Check versions
+choco --version
+mysql --version
+node --version
+npm --version
+
+# Test database
+npm run test-db
+
+# Start dev server
+START_VSSPEED.bat
 ```
 
 ---
 
-## 💡 Pro Tips
+## 🔧 Troubleshooting
 
-1. **Test first**: Always run `npm run sync:test` before full sync
-2. **Adjust pricing**: Start with 25%, increase if converting well
-3. **Regular syncs**: Run sync every 6-12 hours for fresh inventory
-4. **Monitor logs**: Check terminal for any errors
+### PowerShell execution policy error
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+```
+
+### MySQL not in PATH
+Add to System PATH:
+```
+C:\Program Files\MySQL\MySQL Server 8.0\bin
+```
+
+### npm install fails
+```cmd
+# Clear cache
+npm cache clean --force
+
+# Delete node_modules
+rmdir /s node_modules
+
+# Reinstall
+npm install
+```
+
+### Port 5173 already in use
+```cmd
+# Find process using port
+netstat -ano | findstr :5173
+
+# Kill process (replace PID)
+taskkill /PID <process_id> /F
+```
 
 ---
 
-## 📞 Support
+## 📧 Email Setup (For Security Alerts)
 
-**Email**: vsspeedhq@gmail.com  
-**Docs**: Read `AUTOMATION_GUIDE.md` for full guide
+1. **Enable 2FA on Gmail:**
+   - Go to: https://myaccount.google.com/security
+   - Turn on 2-Step Verification
+
+2. **Generate App Password:**
+   - Go to: https://myaccount.google.com/apppasswords
+   - Select "Mail" and "Windows Computer"
+   - Copy 16-character password
+
+3. **Update .env:**
+```bash
+SECURITY_EMAIL_USER=vsspeedsupport@exotiekoh.github.io
+SECURITY_EMAIL_PASSWORD=xxxx xxxx xxxx xxxx
+```
 
 ---
 
-✨ **Status**: SYSTEM FULLY OPERATIONAL  
-🤖 **Automation**: READY TO USE  
-🔥 **Your advantage**: AUTOMATED DROPSHIPPING!
+## 🎯 Post-Installation Checklist
+
+- [ ] Chocolatey installed
+- [ ] MySQL installed and running
+- [ ] Node.js installed
+- [ ] npm packages installed
+- [ ] .env file configured
+- [ ] Database created (14 tables)
+- [ ] Test connection successful
+- [ ] Dev server running on localhost:5174
+- [ ] Email alerts configured
+
+---
+
+## 🚀 Launch VSSPEED
+
+```cmd
+START_VSSPEED.bat
+```
+
+Visit: **http://localhost:5174/**
+
+---
+
+## 📞 Need Help?
+
+**Email:** vsspeedsupport@exotiekoh.github.io  
+**GitHub Issues:** https://github.com/Exotiekoh/VS-SPEED-WEBSITE/issues  
+**Setup Guide:** SETUP_GUIDE.md
+
+---
+
+**Total setup time:** 15-30 minutes  
+**Requirements:** Windows 10/11, Administrator access, 2GB free space
