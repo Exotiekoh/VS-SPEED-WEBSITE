@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/VS-SPEED-WEBSITE/', // GitHub Pages base path
+  base: '/', // Local development - change to '/VS-SPEED-WEBSITE/' for GitHub Pages
   server: {
     host: '0.0.0.0', // Accept connections from any network interface
     port: 5173,
