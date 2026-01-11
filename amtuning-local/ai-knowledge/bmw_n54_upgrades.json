@@ -1,0 +1,299 @@
+{
+  "vehicle": {
+    "make": "BMW",
+    "model": "335i",
+    "engine": "N54",
+    "platform": "E90/E92",
+    "description": "Twin-turbocharged inline-6 engine",
+    "stock_power": {
+      "horsepower": 300,
+      "torque": 300,
+      "unit": "crank HP/lb-ft"
+    }
+  },
+  
+  "philosophy": "Reliability First, followed by Aggressive Deployment",
+  
+  "known_weak_points": [
+    "OEM plastic charge pipe (fails under boost)",
+    "Stock wastegates (rattle at high mileage)",
+    "HPFP (High Pressure Fuel Pump) - fails above 400whp",
+    "Carbon buildup on intake valves",
+    "Stock ignition coils under high boost",
+    "Fuel injectors (aged units leak)",
+    "Turbo wastegate actuators"
+  ],
+  
+  "upgrade_phases": {
+    "phase_1": {
+      "name": "Structural Integrity (Reliability)",
+      "goal": "Address weak points before increasing power",
+      "upgrades": [
+        {
+          "name": "Upgraded Charge Pipe",
+          "reason": "OEM plastic unit fails under increased boost",
+          "recommendation": "Aluminum replacement with TiAL or HKS BOV flange",
+          "price_range": "$150-300",
+          "priority": "CRITICAL",
+          "difficulty": "Easy",
+          "hp_gain": "0-5hp",
+          "reliability_impact": 10
+        },
+        {
+          "name": "Spark Plugs",
+          "part": "NGK 97506 (1-step colder)",
+          "gap": "0.020\"",
+          "reason": "High-boost requires stronger spark",
+          "price_range": "$40-60",
+          "priority": "HIGH",
+          "difficulty": "Easy",
+          "hp_gain": "5-10hp",
+          "reliability_impact": 8
+        },
+        {
+          "name": "Coil Packs",
+          "recommendation": "Precision Raceworks or Eldor high-output",
+          "reason": "Factory coils fail under sustained high boost",
+          "price_range": "$300-500",
+          "priority": "HIGH",
+          "difficulty": "Easy",
+          "hp_gain": "0hp (supporting mod)",
+          "reliability_impact": 9
+        },
+        {
+          "name": "Oil Catch Can",
+          "reason": "Mitigates carbon buildup on intake valves",
+          "recommendation": "Elite Engineering or Burger Motorsports",
+          "price_range": "$150-300",
+          "priority": "MEDIUM",
+          "difficulty": "Medium",
+          "hp_gain": "0hp (maintenance)",
+          "reliability_impact": 7
+        }
+      ]
+    },
+    
+    "phase_2": {
+      "name": "Thermal Management & Airflow (Stage 2)",
+      "goal": "Optimize intake/exhaust flow, prevent heat soak",
+      "upgrades": [
+        {
+          "name": "7.5\" Stepped Front Mount Intercooler (FMIC)",
+          "reason": "Keeps Intake Air Temps stable during multiple pulls",
+          "recommendation": "VSS, VRSF, or CSF unit",
+          "price_range": "$600-900",
+          "priority": "CRITICAL",
+          "difficulty": "Hard",
+          "hp_gain": "20-40hp",
+          "reliability_impact": 5,
+          "notes": "Essential for sustained performance"
+        },
+        {
+          "name": "Catless Downpipes",
+          "reason": "Single most significant upgrade - reduces backpressure, faster spool",
+          "recommendation": "VSS, VRSF, or ARM catless",
+          "price_range": "$500-800",
+          "priority": "CRITICAL",
+          "difficulty": "Hard",
+          "hp_gain": "30-50hp",
+          "reliability_impact": 3,
+          "legal_warning": "Not legal in all states - check local emissions laws"
+        },
+        {
+          "name": "Dual Cone Intakes (DCI)",
+          "reason": "Increases air volume, signature twin-turbo sound",
+          "recommendation": "BMS, ARM, or MST",
+          "price_range": "$250-400",
+          "priority": "MEDIUM",
+          "difficulty": "Easy",
+          "hp_gain": "10-15hp",
+          "reliability_impact": 0
+        },
+        {
+          "name": "Relocated Inlets",
+          "reason": "Optimizes flow path to turbo compressors",
+          "recommendation": "Move filters to passenger side",
+          "price_range": "$100-200",
+          "priority": "LOW",
+          "difficulty": "Easy",
+          "hp_gain": "5-10hp",
+          "reliability_impact": 0
+        }
+      ]
+    },
+    
+    "phase_3": {
+      "name": "Tactical Fueling (The Power Limit)",
+      "goal": "Push past 450whp with upgraded fuel delivery",
+      "upgrades": [
+        {
+          "name": "Stage 2 LPFP (Low Pressure Fuel Pump)",
+          "part": "Walbro 450 or 525",
+          "reason": "Required to support E85 blends and high boost",
+          "price_range": "$200-350",
+          "priority": "CRITICAL",
+          "difficulty": "Hard",
+          "hp_gain": "0hp (supporting mod)",
+          "reliability_impact": 8,
+          "required_for": "E85, Stage 2+ tunes"
+        },
+        {
+          "name": "Tuning Interface",
+          "options": ["MHD", "Cobb", "JB4"],
+          "recommendation": "MHD for most precise flash tuning",
+          "price_range": "$400-600",
+          "priority": "CRITICAL",
+          "difficulty": "Easy",
+          "hp_gain": "Varies by tune",
+          "reliability_impact": -5
+        },
+        {
+          "name": "VSS Custom ECU Tune",
+          "price": "$29.99 USD",
+          "includes": "2 free revisions to dial in specific logs",
+          "priority": "CRITICAL",
+          "difficulty": "Easy (flash via laptop)",
+          "hp_gain": "80-150hp (cumulative)",
+          "reliability_impact": -3,
+          "url": "https://exotiekoh.github.io/VS-SPEED-WEBSITE/ai-assistant"
+        }
+      ]
+    }
+  },
+  
+  "build_packages": [
+    {
+      "name": "Stage 1 (Street)",
+      "description": "Daily driver friendly, reliable power bump",
+      "hardware": [
+        "Charge Pipe",
+        "Dual Cone Intakes (DCI)",
+        "VSS Custom Tune"
+      ],
+      "estimated_power": {
+        "min": 360,
+        "max": 380,
+        "unit": "crank HP"
+      },
+      "price_range": {
+        "min": 450,
+        "max": 600,
+        "currency": "USD"
+      },
+      "reliability_rating": 9,
+      "octane_requirement": "91+",
+      "suited_for": ["Daily driving", "Street pulls", "Show cars"]
+    },
+    {
+      "name": "Stage 2 (Performance)",
+      "description": "Significant power increase, weekend warrior setup",
+      "hardware": [
+        "Front Mount Intercooler (FMIC)",
+        "Catless Downpipes",
+        "Spark Plugs (colder)",
+        "VSS Custom Tune"
+      ],
+      "estimated_power": {
+        "min": 400,
+        "max": 430,
+        "unit": "crank HP"
+      },
+      "price_range": {
+        "min": 1200,
+        "max": 1500,
+        "currency": "USD"
+      },
+      "reliability_rating": 7,
+      "octane_requirement": "93+",
+      "suited_for": ["Weekend driving", "Occasional track", "Enthusiast builds"],
+      "warnings": [
+        "Check wastegates for rattle before tuning",
+        "May void warranty",
+        "Not emissions legal in all states"
+      ]
+    },
+    {
+      "name": "Stage 2+ (Aggressive)",
+      "description": "Maximum N54 power on stock turbos",
+      "hardware": [
+        "All Stage 2 hardware",
+        "Stage 2 LPFP (Walbro 450/525)",
+        "E50 Fuel Mix capability"
+      ],
+      "estimated_power": {
+        "min": 450,
+        "max": 500,
+        "unit": "crank HP"
+      },
+      "price_range": {
+        "min": 1800,
+        "max": 2200,
+        "currency": "USD"
+      },
+      "reliability_rating": 5,
+      "octane_requirement": "E50 blend (50% E85)",
+      "suited_for": ["Track builds", "Dyno queens", "Experienced tuners"],
+      "warnings": [
+        "Wastegates MUST be in perfect condition",
+        "Turbos nearing end of safe limit",
+        "Monitoring required (AFR, boost, IAT)",
+        "Not recommended for daily use"
+      ]
+    }
+  ],
+  
+  "vss_logistics": {
+    "shipping": "FREE Global Shipping on orders over $100",
+    "warranty": "1-year warranty on all VSS branded parts",
+    "support": "vsspeedsupport@exotiekoh.github.io",
+    "tune_revisions": "2 free revisions included with custom tune"
+  },
+  
+  "critical_warnings": [
+    "Ensure wastegates are in good condition (no rattle) before Stage 2+ tuning",
+    "Increased boost will highlight any mechanical wear",
+    "Carbon cleaning recommended before major upgrades",
+    "Monitor coolant temps on track (N54 runs hot)",
+    "HPFP replacement recommended at 80k+ miles before tuning"
+  ],
+  
+  "maintenance_requirements": {
+    "stage_1": [
+      "Oil changes every 5,000 miles (synthetic)",
+      "Spark plug inspection every 20,000 miles",
+      "Visual charge pipe inspection monthly"
+    ],
+    "stage_2": [
+      "All Stage 1 maintenance",
+      "Monitor IATs (should stay under 120°F)",
+      "Walnut blast carbon cleaning every 30k miles",
+      "Boost leak test annually"
+    ],
+    "stage_2_plus": [
+      "All Stage 2 maintenance",
+      "Fuel filter replacement every 15k miles",
+      "E85 sensor cleaning/replacement as needed",
+      "Turbo health check every 20k miles",
+      "Compression test annually"
+    ]
+  },
+  
+  "tuning_notes": {
+    "recommended_logs": [
+      "AFR (Air-Fuel Ratio) - target 11.5-12.0 under boost",
+      "Boost pressure - monitor for spikes or drops",
+      "IAT (Intake Air Temp) - keep under 120°F",
+      "Coolant temp - watch for overheating",
+      "Ignition timing - check for knock"
+    ],
+    "safe_limits": {
+      "boost_psi": "19-21 psi (stock turbos)",
+      "iat_max": "120°F",
+      "coolant_max": "220°F",
+      "afr_min": "11.5",
+      "max_timing_advance": "Stock + 3 degrees"
+    }
+  },
+  
+  "ai_response_template": "Mission Control established. Welcome to the VSS Speed Global briefing for the BMW N54 platform.\n\nThe N54 is a legendary twin-turbocharged power plant, requiring precise calibration and hardware optimization. Our philosophy: Reliability First, followed by Aggressive Deployment."
+}
