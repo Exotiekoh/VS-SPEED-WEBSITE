@@ -1,0 +1,34 @@
+VSSPEED Database Setup Instructions
+====================================
+
+Run these commands IN YOUR ELEVATED (ADMINISTRATOR) COMMAND PROMPT:
+
+1. Navigate to the project folder:
+   cd "C:\Users\burri\OneDrive\Desktop\first_project_Jamie_hamza\amtuning-local"
+
+2. Run the database setup script:
+   SETUP_DATABASE_COMPLETE.bat
+
+3. When prompted:
+   - MySQL root username: root
+   - MySQL root password: [the password you set during MySQL installation]
+
+4. The script will display a randomly generated password for vsspeed_app
+   SAVE THIS PASSWORD - you'll need it for the .env file
+
+5. After the script completes, verify by running:
+   mysql -u vsspeed_app -p vsspeed_db -e "SHOW TABLES;"
+   (enter the vsspeed_app password when prompted)
+
+6. You should see a list of ~22 tables
+
+7. Then import the anti-gravity schema:
+   mysql -u vsspeed_app -p vsspeed_db < database\antigravity-schema.sql
+   (enter the vsspeed_app password again)
+
+8. Start the dev server:
+   START_VSSPEED.bat
+
+9. Open browser to: http://localhost:5174/
+
+If you encounter any errors, copy the error message and report it.
